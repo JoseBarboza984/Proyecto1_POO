@@ -207,7 +207,7 @@ public class ConstruccionVivienda extends Credito{
     }
     
     private double calcularMontoBonoDolares(double pIngresoFamiliar) {
-        double resultado = 0;
+        double resultado;
         if(pIngresoFamiliar >= 282753/670) 
             resultado = 7630000/670;
         
