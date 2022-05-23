@@ -5,12 +5,12 @@
 package logicadenegocios;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.time.Period;
+import java.util.Date; 
 
 /**
- *
- * @author Jose
+ *  Clase padre de creditos, representa la base de los creditos
+ * 
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public abstract class Credito {
     protected String tipo;                                 //Atributos que describen el credito
@@ -29,6 +29,14 @@ public abstract class Credito {
     
     private static int cantSolicitudes = 0;
     
+    /**
+     *  Metodo constructor del credito
+     * 
+     * @param pTipo         Tipo de credito
+     * @param pMonto      Monto inicial solicitado en el credito
+     * @param pPlazo        Cantidad de años plazo del credito
+     * @param pMoneda    Tipo de moneda en la que se pide el credito
+     */
     public Credito(String pTipo, double pMonto, int pPlazo, String pMoneda) {
         tipo = pTipo;
         monto = pMonto;
@@ -40,6 +48,12 @@ public abstract class Credito {
         setFechaSolicitud();
     }
     
+    /**
+     * Realiza el codigo de los creditos 
+     * 
+     * @param pNum  Numero que representa el numero de creditos
+     * @return 
+     */
     private  String formatoCodigo(int pNum) {
         String num = String.valueOf(pNum);
         int largo = 4-num.length();
