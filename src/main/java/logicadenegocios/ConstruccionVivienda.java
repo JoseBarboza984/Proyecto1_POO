@@ -166,6 +166,12 @@ public class ConstruccionVivienda extends Credito{
         return calcularMinimoHonorariosDolares(resultado);
     }
     
+   /**
+     * Calcula el monto en dolares del bono al que aplica el solicitante en base al ingreso familiar
+     * 
+     * @param pIngresoFamiliar  Monto que indica los ingresos familiares
+     * @return      Monto asignado de bono en dolares
+     */
     private double calcularMontoBonoColones(double pIngresoFamiliar) {
         double resultado;
         if(pIngresoFamiliar >= 282753) 
@@ -206,6 +212,12 @@ public class ConstruccionVivienda extends Credito{
         return resultado;
     }
     
+    /**
+     * Calcula el monto en dolares del bono al que aplica el solicitante en base al ingreso familiar
+     * 
+     * @param pIngresoFamiliar  Monto que indica los ingresos familiares
+     * @return      Monto asignado de bono en dolares
+     */
     private double calcularMontoBonoDolares(double pIngresoFamiliar) {
         double resultado;
         if(pIngresoFamiliar >= 282753/670) 
