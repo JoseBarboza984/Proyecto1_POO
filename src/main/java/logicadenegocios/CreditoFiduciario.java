@@ -9,12 +9,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- *
- * @author Jose
+ *  Clase hija de Credito, representa el credito fiduciario
+ * 
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class CreditoFiduciario extends Credito {
     ArrayList<Fiador> fiadores;
     
+    /**
+     * Metodo constructor del credito fiduciario
+     * 
+     * @param pTipo         Tipo de credito
+     * @param pMonto      Monto inicial solicitado en el credito
+     * @param pPlazo        Cantidad de años plazo del credito
+     * @param pMoneda    Tipo de moneda en la que se pide el credito
+     */
     public CreditoFiduciario(String pTipo, double pMonto, int pPlazo, String pMoneda) {
         super(pTipo, pMonto, pPlazo, pMoneda);
         super.gastosFormalizacion = pMonto * 0.03;
@@ -26,10 +35,24 @@ public class CreditoFiduciario extends Credito {
         fiadores = new ArrayList<>();
     }
     
+    /**
+     * Calcula el monto final del credito
+     * 
+     * @return      Suma de monto inicial del credito con los gastos extras del credito
+     */
     double getMontoFinal() {
         return super.monto+super.gastosFormalizacion;
     }
     
+    /**
+     * Metodo que verifica que los fiadores cumplan con la cuota
+     * 
+     * @param pFiadores     Array de fiadores
+     * @param pMonto        Monto final del credito
+     * @param pCuota        Monto de la cuota del credito
+     * @return      True (Si salario liquido de los o el fiador es mayor a la cuota y si la suma de sus salarios brutos es mayor al 20% del monto del credito)
+     *                              False (Si no)
+     */
     public boolean verificarFiadores(Fiador[] pFiadores, double pMonto, double pCuota){
         double suma = 0;
         for(Fiador fiador:pFiadores){
@@ -47,6 +70,10 @@ public class CreditoFiduciario extends Credito {
         return true;
     }
     
+    /**
+     *  Establece el atributo estado
+     * @param pEstado   Variable que contiene si se debe aceptar o no el credito
+     */
     public void setEstado(boolean pEstado) {
         if(pEstado)
             estado = "Aceptado";
