@@ -1,0 +1,101 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package logicadenegocios;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.time.Period;
+
+/**
+ *
+ * @author Jose
+ */
+public abstract class Credito {
+    protected String tipo;                                 //Atributos que describen el credito
+    protected double monto;
+    protected String moneda;
+    protected Date fechaSolicitud;
+    protected String numeroSolicitud;
+    protected String estado;
+    
+    protected double tasaInteres;                    //Atributos necesarios para calculos
+    protected int plazo;
+    protected double cuota;
+    
+    protected double gastosFormalizacion;       //Atributos que aumentan el monto final
+    protected double honorariosLegales;
+    
+    private static int cantSolicitudes = 0;
+    
+    public Credito(String pTipo, double pMonto, int pPlazo, String pMoneda) {
+        tipo = pTipo;
+        monto = pMonto;
+        plazo = pPlazo;
+        moneda = pMoneda;
+        cantSolicitudes++;
+        numeroSolicitud = formatoCodigo(cantSolicitudes);
+        gastosFormalizacion = 0.03;
+        setFechaSolicitud();
+    }
+    
+    private  String formatoCodigo(int pNum) {
+        String num = String.valueOf(pNum);
+        int largo = 4-num.length();
+        String codigo = "CRE";
+        for(int i = 0; i < largo; i++) 
+                codigo += "0";
+        return codigo+num;
+    }
+    
+    protected void setEstado(boolean pEstado) {
+        if(pEstado)
+            estado = "Aceptado";
+        else 
+            estado = "Rechazado";
+    }
+    
+   /**
+     *  Se establece la fecha del credito, que se obtenida del sistema
+     * 
+     */
+    public void setFechaSolicitud() {
+        Date fecha = new Date();
+        fechaSolicitud = fecha;
+    }
+    
+    /**
+     *  Se obtiene la fecha en formato dia mes año
+     * @return Cadena de caracteres con la fecha del credito
+     */
+    public String getFechaSolicitud() {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        return formato.format(fechaSolicitud);
+    }
+    
+    public String getNumeroSolicitud() {
+        return numeroSolicitud;
+    }
+    
+    public double getTasaInteres() {
+        return tasaInteres;
+    }
+    
+    public String getMoneda() {
+        return moneda;
+    }
+    
+    @Override
+    public String toString() {
+        String msg = "";
+        msg += "Credito "+tipo+"\n"+numeroSolicitud+"\n"+"Estado: "+estado+"\n";
+        msg += "Solicitado el: "+getFechaSolicitud()+"\n"+"A "+plazo+" años plazo en "+moneda+"\n";
+        return msg;
+    }
+    
+    public abstract Object[][] calcularTablaAmortizacion(double pMonto, int pPlazoAnios, double pTasaInteres);
+        
+   
+    
+}

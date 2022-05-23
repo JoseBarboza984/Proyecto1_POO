@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-shared-configuration>
+    <!--
+This file contains additional configuration written by modules in the NetBeans IDE.
+The configuration is intended to be shared among all the users of project and
+therefore it is assumed to be part of version control checkout.
+Without this configuration present, some functionality in the IDE may be limited or fail altogether.
+-->
+    <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+        <word>aceptar</word>
+        <word>adquisición</word>
+        <word>amortizacion</word>
+        <word>amortización</word>
+        <word>aplica</word>
+        <word>atributo</word>
+        <word>año</word>
+        <word>años</word>
+        <word>basica</word>
+        <word>Cadena</word>
+        <word>Calcula</word>
+        <word>calculado</word>
+        <word>calculados</word>
+        <word>calcular</word>
+        <word>calculos</word>
+        <word>Cantidad</word>
+        <word>caracteres</word>
+        <word>Clase</word>
+        <word>contiene</word>
+        <word>Crea</word>
+        <word>credito</word>
+        <word>cumple</word>
+        <word>cuota</word>
+        <word>datos</word>
+        <word>determinar</word>
+        <word>Deuda</word>
+        <word>dia</word>
+        <word>dolares</word>
+        <word>efectiva</word>
+        <word>establece</word>
+        <word>estado</word>
+        <word>fecha</word>
+        <word>formato</word>
+        <word>frances</word>
+        <word>gastos</word>
+        <word>hija</word>
+        <word>hipotecario</word>
+        <word>honorarios</word>
+        <word>inicial</word>
+        <word>interes</word>
+        <word>los</word>
+        <word>matriz</word>
+        <word>Metodo</word>
+        <word>minimo</word>
+        <word>moneda</word>
+        <word>monto</word>
+        <word>Numero</word>
+        <word>objetos</word>
+        <word>obtenida</word>
+        <word>obtiene</word>
+        <word>pagar</word>
+        <word>pasiva</word>
+        <word>pide</word>
+        <word>plazo</word>
+        <word>prestamo</word>
+        <word>que</word>
+        <word>Realiza</word>
+        <word>representa</word>
+        <word>se</word>
+        <word>sistema</word>
+        <word>solicitado</word>
+        <word>solicitante</word>
+        <word>Suma</word>
+        <word>Tasa</word>
+        <word>terreno</word>
+        <word>Tipo</word>
+        <word>Totales</word>
+        <word>un</word>
+        <word>una</word>
+        <word>va</word>
+    </spellchecker-wordlist>
+</project-shared-configuration>
