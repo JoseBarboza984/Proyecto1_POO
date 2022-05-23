@@ -50,8 +50,8 @@ public class CreditoFiduciario extends Credito {
      * @param pFiadores     Array de fiadores
      * @param pMonto        Monto final del credito
      * @param pCuota        Monto de la cuota del credito
-     * @return      True (Si salario liquido de los o el fiador es mayor a la cuota y si la suma de sus salarios brutos es mayor al 20% del monto del credito)
-     *                              False (Si no)
+     * @return      true (Si salario liquido de los o el fiador es mayor a la cuota y si la suma de sus salarios brutos es mayor al 20% del monto del credito)
+     *                              false (Si no)
      */
     public boolean verificarFiadores(Fiador[] pFiadores, double pMonto, double pCuota){
         double suma = 0;
@@ -63,6 +63,14 @@ public class CreditoFiduciario extends Credito {
         return suma >= pMonto*0.20;
     }
     
+    /**
+     * Metodo que establece los fiadores en el array del credito si cumplen con los requisitos
+     * 
+     * @param pFiador         Array de fiadores
+     * @param pMonto        Monto final del credito
+     * @param pCuota        Monto de la cuota del credito
+     * @return      true(En caso de que cumplan los requisitos) y false(Si no)
+     */
     public boolean setFiadores(Fiador[] pFiador, double pMonto, double pCuota) {
         if(!verificarFiadores(pFiador, pMonto, pCuota))
             return false;
@@ -81,19 +89,38 @@ public class CreditoFiduciario extends Credito {
             estado = "Rechazado";
     }
     
+    
+    /**
+     * Calcula los datos de una fila "k" de la tabla de amortizacion en base al sistema frances
+     *
+     * @param pMonto                                Monto final del prestamo solicitado
+     * @param pPlazoAnios                         Cantidad de años en lo que se va a pagar el credito
+     * @param pTasaInteres                        Tasa de interes que se aplica en el credito
+     * @param k                                          Numero de cuota o fila
+     * @param pAmortizacionAnterior         Valor de la amortización en la cuota anterior
+     * @return      Array de objetos que contiene los datos {Numero de cuota, Monto de cuota, Interes, Amortización, Deuda}
+     */
     public Object[] calcularCuotaSF(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior) {
         Object[] array =  new Object[5];
         array[0] = k;
-        double cuota = (pMonto * pTasaInteres)/1- (double) Math.pow((1.0+pTasaInteres), -pPlazoAnios);
-        array[1] = cuota;
-        double interes = cuota*(1-(1/Math.pow(1+pTasaInteres,pPlazoAnios+1-k)));
+        double montoCuota = (pMonto * pTasaInteres)/1- (double) Math.pow((1.0+pTasaInteres), -pPlazoAnios);
+        array[1] = montoCuota;
+        double interes = montoCuota*(1-(1/Math.pow(1+pTasaInteres,pPlazoAnios+1-k)));
         array[2] = interes;
-        double amortizacion = cuota/Math.pow(1+pTasaInteres, pPlazoAnios+1-k);
+        double amortizacion = montoCuota/Math.pow(1+pTasaInteres, pPlazoAnios+1-k);
         array[3] = amortizacion;
         array[4] = pMonto- pAmortizacionAnterior;
         return array;
     }
     
+    
+    /**
+     * Realiza la ultima fila de la tabla de amortización
+     *
+     * @param pMatriz           Matriz que contiene los datos de la tabla de amortización
+     * @param pPlazoAnios    Cantidad de años en lo que se va a pagar el credito
+     * @return      Array de objetos que contiene los datos {"Totales", , Suma de Interes, Suma de Amortización, 0}
+     */
     public Object[] calcularTotales(Object[][] pMatriz, int pPlazoAnios) {
         Object[] array = new Object[5];
         array[0] = "Totales'";
@@ -110,6 +137,14 @@ public class CreditoFiduciario extends Credito {
         return array;
     }
     
+    /**
+     * Crea una matriz de objetos con los calculos de la tabla de amortización 
+     *
+     * @param pMonto            Monto final del prestamo solicitado
+     * @param pPlazoAnios     Cantidad de años en lo que se va a pagar el credito
+     * @param pTasaInteres    Tasa de interes que se aplica en el credito
+     * @return      Matriz de objetos con los datos de la tabla de amortización
+     */
     @Override                                                       //      V                           n                               i
     public Object[][] calcularTablaAmortizacion(double pMonto, int pPlazoAnios, double pTasaInteres) {
         Object[][] resultados = new Object[pPlazoAnios+1][5];
@@ -120,7 +155,6 @@ public class CreditoFiduciario extends Credito {
             amortizacion = (double) resultados [i][3];
             largo++;
         }
-        
         resultados[largo] = calcularTotales(resultados, pPlazoAnios);
         return resultados;
     }
