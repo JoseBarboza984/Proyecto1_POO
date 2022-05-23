@@ -5,8 +5,9 @@
 package logicadenegocios;
 
 /**
- *
- * @author Jose
+ *  Clase que representa una dirección de un solicitante
+ * 
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class Direccion {
     private String provincia;
@@ -14,6 +15,14 @@ public class Direccion {
     private String distrito;
     private String sennas;
     
+    /**
+     * Metodo constructor del la Clase dirección
+     * 
+     * @param pProvincia
+     * @param pCanton
+     * @param pDistrito
+     * @param pSennas
+     */
     public Direccion(String pProvincia, String pCanton, String pDistrito, String pSennas) {
         provincia = pProvincia;
         canton = pCanton;
@@ -21,22 +30,25 @@ public class Direccion {
         sennas = pSennas;
     }
     
+    //Metodos Accesores
     public String getProvincia() {
         return provincia;
     }
-    
     public String getCanton() {
         return canton;
     }
-    
     public String getDistrito() {
         return distrito;
     }
-    
     public String getSennas() {
         return sennas;
     }
     
+    /**
+     *  Metodo para establecer la información en una Cadena de caracteres
+     * 
+     * @return  Cadena de caracteres con la información de dirección
+     */
     @Override
     public String toString() {
         String msg = "";
