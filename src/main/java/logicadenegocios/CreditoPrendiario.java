@@ -6,30 +6,49 @@ package logicadenegocios;
 
 
 /**
- *
- * @author Jose
+ *  Clase hija de Credito, representa el credito prendario
+ * 
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class CreditoPrendiario extends Credito {
-    private Prenda prenda;      //Validar cuando no existe una prenda registrada
+    private Prenda prenda;      
     
+    /**
+     * Metodo constructor del credito prendario
+     * 
+     * @param pTipo         Tipo de credito
+     * @param pMonto      Monto inicial solicitado en el credito
+     * @param pPlazo        Cantidad de años plazo del credito
+     * @param pMoneda    Tipo de moneda en la que se pide el credito
+     */
     public CreditoPrendiario(String pTipo, double pMonto, int pPlazo, String pMoneda) {
         super(pTipo, pMonto, pPlazo, pMoneda);
         super.gastosFormalizacion = pMonto * 0.03;
        
-        if(pMoneda == "Colones") {
+        if("Colones".equals(pMoneda)) {
             super.tasaInteres = 0.15;
             super.honorariosLegales = calcularHonorariosColones(pMonto);
         }
-        else if(pMoneda == "Dolares"){
+        else if("Dolares".equals(pMoneda)){
             super.tasaInteres = 0.13;
             super.honorariosLegales = calcularHonorariosDolares(pMonto);
         }
     }
     
+    /**
+     * Calcula el monto final del credito
+     * 
+     * @return      Suma de monto inicial del credito con los gastos extras del credito
+     */
     public double getMontoFinal() {
         return super.monto+super.gastosFormalizacion+super.honorariosLegales;
     }
     
+    /**
+     *  Establece el atributo estado
+     * @param pEstado   Variable que contiene si se debe aceptar o no el credito
+     */
+    @Override
     public void setEstado(boolean pEstado) {
         if(pEstado)
             estado = "Aceptado";
@@ -38,10 +57,11 @@ public class CreditoPrendiario extends Credito {
     }
     
     /**
+     * Metodo para estabecer la prenda si cumple con la condiciones
      * 
-     * @param pDescripcionPrenda
-     * @param pMontoPrenda
-     * @return 
+     * @param pDescripcionPrenda    Descripcción de la prenda
+     * @param pMontoPrenda             Monto del costo de la prenda
+     * @return      true (Si la el valor de la prenda es mayor al 85% del monto final del credito) y false (Si no)
      */
     public boolean setPrenda(String pDescripcionPrenda, double pMontoPrenda) {
         double limitePrenda = (super.monto + super.gastosFormalizacion + super.honorariosLegales)*0.85;
@@ -72,7 +92,7 @@ public class CreditoPrendiario extends Credito {
      */
     private double calcularHonorariosColones(double pMontoInicial) {
         double resultado;
-        double residuo = 0;
+        double residuo;
         
         if (pMontoInicial <= 11000000){
             resultado = pMontoInicial*0.02;
@@ -96,7 +116,7 @@ public class CreditoPrendiario extends Credito {
      * Metodo para determinar si el monto calculado cumple con el minimo de honorarios en dolares
      * 
      * @param pMonto    Monto en colones de los honorarios
-     * @return Monto en colones de los honorarios
+     * @return Monto en dolares de los honorarios
      */
     private double calcularMinimoHonorariosDolares(double pMonto) {
         if(pMonto < 93) 
@@ -113,7 +133,7 @@ public class CreditoPrendiario extends Credito {
      */
     private double calcularHonorariosDolares(double pMontoInicial) {
         double resultado;
-        double residuo = 0;
+        double residuo;
         
         if (pMontoInicial <= 16418){
             resultado = pMontoInicial*0.02;
@@ -133,13 +153,23 @@ public class CreditoPrendiario extends Credito {
         return calcularMinimoHonorariosDolares(resultado);
     }
 
-    public Object[] calcularCuotaSAm(double pMonto, int pPlazoAnios, double pTasaInteres, int k, int n, double pAmortizacionAnterior) {
+    /**
+     * Calcula los datos de una fila "k" de la tabla de amortizacion en base al sistema americano
+     *
+     * @param pMonto                                Monto final del prestamo solicitado
+     * @param pPlazoAnios                         Cantidad de años en lo que se va a pagar el credito
+     * @param pTasaInteres                        Tasa de interes que se aplica en el credito
+     * @param k                                          Numero de cuota o fila                                          
+     * @param pAmortizacionAnterior         Valor de la amortización en la cuota anterior
+     * @return      Array de objetos que contiene los datos {Numero de cuota, Monto de cuota, Interes, Amortización, Deuda}
+     */
+    public Object[] calcularCuotaSAm(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior) {
         Object[] array =  new Object[5];
         array[0] = k;
         double interes = pTasaInteres * pMonto;
         array[2] = interes;
         double amortizacion = 0;
-        if(k == n)
+        if(k == pPlazoAnios)
             amortizacion = pMonto;
         array[3] = amortizacion;
         double mCuota = interes + amortizacion;
@@ -148,6 +178,13 @@ public class CreditoPrendiario extends Credito {
         return array;
     }
     
+    /**
+     * Realiza la ultima fila de la tabla de amortización
+     *
+     * @param pMatriz           Matriz que contiene los datos de la tabla de amortización
+     * @param pPlazoAnios    Cantidad de años en lo que se va a pagar el credito
+     * @return      Array de objetos que contiene los datos {"Totales", , Suma de Interes, Suma de Amortización, 0}
+     */
     public Object[] calcularTotales(Object[][] pMatriz, int pPlazoAnios) {
         Object[] array = new Object[5];
         array[0] = "Totales'";
@@ -164,17 +201,25 @@ public class CreditoPrendiario extends Credito {
         return array;
     }
     
-    @Override                                                       //      V                           n                               i
+    
+    /**
+     * Crea una matriz de objetos con los calculos de la tabla de amortización 
+     *
+     * @param pMonto            Monto final del prestamo solicitado
+     * @param pPlazoAnios     Cantidad de años en lo que se va a pagar el credito
+     * @param pTasaInteres    Tasa de interes que se aplica en el credito
+     * @return      Matriz de objetos con los datos de la tabla de amortización
+     */
+    @Override                                                      //      V                           n                               i
     public Object[][] calcularTablaAmortizacion(double pMonto, int pPlazoAnios, double pTasaInteres) {
         Object[][] resultados = new Object[pPlazoAnios+1][5];
         double amortizacion = 0;
         int largo = 0;
         for(int i = 0; i < pPlazoAnios; i++) {
-            resultados[i] = calcularCuotaSAm(pMonto, pPlazoAnios, pTasaInteres, i+1, pPlazoAnios, amortizacion);
+            resultados[i] = calcularCuotaSAm(pMonto, pPlazoAnios, pTasaInteres, i+1, amortizacion);
             amortizacion = (double) resultados [i][3];
             largo++;
         }
-        
         resultados[largo] = calcularTotales(resultados, pPlazoAnios);
         return resultados;
     }
