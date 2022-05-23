@@ -47,7 +47,6 @@ public class funciones {
     static ArrayList<Solicitante> solicitantes;
     
     public static void main(String[] args) throws IOException, DocumentException {
-        
         solicitantes = new ArrayList<>(); //String pTipo, double pMonto, int pPlazo, String pMoneda, Date pFechaSolicitud
         Solicitante solicitante = new Solicitante("Jose", "Daniel", "Barboza", "Campos", 702870837, 87175835, "jd.2001.bc@gmail.com",  300000.0, 950000.0, "Limon", "Poccoci", "Guapiles", "Centro");
         boolean respuesta = registrarSolicitante(solicitante);
@@ -68,7 +67,6 @@ public class funciones {
         System.out.println(cre.toString());
         Object[][] matriz = cre.calcularTablaAmortizacion(1000000, 5, cre.getTasaInteres());
         guardarPDF(matriz, buscarSolicitante(702870837), cre.toString());
-        
     }
     
     public static boolean registrarSolicitante(Solicitante pSolicitante) {
