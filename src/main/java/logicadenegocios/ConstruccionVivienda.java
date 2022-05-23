@@ -6,22 +6,34 @@ package logicadenegocios;
 
 
 /**
- *
- * @author Jose
+ *  Clase hija de Credito, representa el credito hipotecario de construcción de vivienda
+ * 
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class ConstruccionVivienda extends Credito{
     private double avaluo;
     private double montoBono = 0;
     private boolean bono = false;
     
+    /**
+     * Metodo constructor del credito hipotecario de construcción de vivienda
+     * 
+     * @param pTipo                       Tipo de credito
+     * @param pMonto                   Monto inicial solicitado en el credito
+     * @param pPlazo                     Cantidad de años plazo del credito
+     * @param pMoneda                 Tipo de moneda en la que se pide el credito
+     * @param pTBP                       Tasa basica pasiva
+     * @param pTED                       Tasa efectiva en dolares
+     * @param pBono                     Boolean que indica si quiere aplicar al bono
+     * @param pIngresoFamiliar     Monto del ingreso familiar
+     */
     public ConstruccionVivienda (String pTipo, double pMonto, int pPlazo, String pMoneda, double pTBP, double pTED, boolean pBono, double pIngresoFamiliar) {
         super(pTipo, pMonto, pPlazo, pMoneda);
         bono = pBono;
-        
-        if(pMoneda == "Colones") {
+        if("Colones".equals(pMoneda)) {
             super.tasaInteres = pTBP+0.025;
             if(bono = true) {
-                montoBono = calcularMontoBonoColones(pMonto, pIngresoFamiliar);
+                montoBono = calcularMontoBonoColones(pIngresoFamiliar);
                 super.honorariosLegales = calcularHonorariosColones(pMonto-montoBono);
                 super.gastosFormalizacion = (pMonto-montoBono)*0.0075;
                 avaluo = (pMonto-montoBono)* 0.0065;
@@ -35,7 +47,7 @@ public class ConstruccionVivienda extends Credito{
         else if(pMoneda == "Dolares"){
             super.tasaInteres = pTED+0.015;
             if(bono = true) {
-                montoBono = calcularMontoBonoDolares(pMonto, pIngresoFamiliar);
+                montoBono = calcularMontoBonoDolares(pIngresoFamiliar);
                 super.honorariosLegales = calcularHonorariosDolares(pMonto-montoBono);
                 super.gastosFormalizacion = (pMonto-montoBono)*0.0075;
                 avaluo = (pMonto-montoBono)* 0.0065;
@@ -47,7 +59,11 @@ public class ConstruccionVivienda extends Credito{
         }
     }
          
-    
+    /**
+     * Calcula el monto final del credito
+     * 
+     * @return      Suma de monto inicial del credito con los gastos extras del credito
+     */
     public double getMontoFinal() {
         double Monto = super.monto;
         if(bono = true)
@@ -55,6 +71,11 @@ public class ConstruccionVivienda extends Credito{
         return avaluo+super.gastosFormalizacion+super.honorariosLegales+Monto;
     }
     
+    /**
+     *  Establece el atributo estado
+     * @param pEstado   Variable que contiene si se debe aceptar o no el credito
+     */
+    @Override
     public void setEstado(boolean pEstado) {
         if(pEstado)
             estado = "Aceptado";
@@ -80,7 +101,7 @@ public class ConstruccionVivienda extends Credito{
      * Metodo para calcular los honorarios en colones
      * 
      * @param pMontoInicial     Monto inicial del credito
-     * @return Monto de los honorarios calculados
+     * @return Monto en colones de los honorarios
      */
     private double calcularHonorariosColones(double pMontoInicial) {
         double resultado;
@@ -125,7 +146,7 @@ public class ConstruccionVivienda extends Credito{
      */
     private double calcularHonorariosDolares(double pMontoInicial) {
         double resultado;
-        double residuo = 0;
+        double residuo;
         
         if (pMontoInicial <= 16418){
             resultado = pMontoInicial*0.02;
@@ -145,39 +166,39 @@ public class ConstruccionVivienda extends Credito{
         return calcularMinimoHonorariosDolares(resultado);
     }
     
-    private double calcularMontoBonoColones(double pMontoInicial, double pIngresoFamiliar) {
-        double resultado = 0;
-        if(pMontoInicial >= 282753) 
+    private double calcularMontoBonoColones(double pIngresoFamiliar) {
+        double resultado;
+        if(pIngresoFamiliar >= 282753) 
             resultado = 7630000;
         
-        else if(pMontoInicial >= 424129.5) 
+        else if(pIngresoFamiliar >= 424129.5) 
             resultado = 7576000;
         
-        else if(pMontoInicial >= 565506) 
+        else if(pIngresoFamiliar >= 565506) 
             resultado = 7523000;
         
-        else if(pMontoInicial >= 706882.5) 
+        else if(pIngresoFamiliar >= 706882.5) 
             resultado = 7178000;
         
-        else if(pMontoInicial >= 848259) 
+        else if(pIngresoFamiliar >= 848259) 
             resultado = 6834000;
         
-        else if(pMontoInicial >= 989635.5) 
+        else if(pIngresoFamiliar >= 989635.5) 
             resultado = 6489000;
         
-        else if(pMontoInicial >= 1131012) 
+        else if(pIngresoFamiliar >= 1131012) 
             resultado = 6145000;
         
-        else if(pMontoInicial >= 1272388.5) 
+        else if(pIngresoFamiliar >= 1272388.5) 
             resultado = 5801000;
         
-        else if(pMontoInicial >= 1413765) 
+        else if(pIngresoFamiliar >= 1413765) 
             resultado = 5456000;
         
-        else if(pMontoInicial >= 1555141.5) 
+        else if(pIngresoFamiliar >= 1555141.5) 
             resultado = 5112000;
        
-        else if(pMontoInicial >= 1696518) 
+        else if(pIngresoFamiliar >= 1696518) 
             resultado = 4768000;
         
         else
@@ -185,39 +206,39 @@ public class ConstruccionVivienda extends Credito{
         return resultado;
     }
     
-    private double calcularMontoBonoDolares(double pMontoInicial, double pIngresoFamiliar) {
+    private double calcularMontoBonoDolares(double pIngresoFamiliar) {
         double resultado = 0;
-        if(pMontoInicial >= 282753/670) 
+        if(pIngresoFamiliar >= 282753/670) 
             resultado = 7630000/670;
         
-        else if(pMontoInicial >= 424129.5/670) 
+        else if(pIngresoFamiliar >= 424129.5/670) 
             resultado = 7576000/670;
         
-        else if(pMontoInicial >= 565506/670) 
+        else if(pIngresoFamiliar >= 565506/670) 
             resultado = 7523000/670;
         
-        else if(pMontoInicial >= 706882.5/670) 
+        else if(pIngresoFamiliar >= 706882.5/670) 
             resultado = 7178000/670;
         
-        else if(pMontoInicial >= 848259/670) 
+        else if(pIngresoFamiliar >= 848259/670) 
             resultado = 6834000/670;
         
-        else if(pMontoInicial >= 989635.5/670) 
+        else if(pIngresoFamiliar >= 989635.5/670) 
             resultado = 6489000/670;
         
-        else if(pMontoInicial >= 1131012/670) 
+        else if(pIngresoFamiliar >= 1131012/670) 
             resultado = 6145000/670;
         
-        else if(pMontoInicial >= 1272388.5/670) 
+        else if(pIngresoFamiliar >= 1272388.5/670) 
             resultado = 5801000/670;
         
-        else if(pMontoInicial >= 1413765/670) 
+        else if(pIngresoFamiliar >= 1413765/670) 
             resultado = 5456000/670;
         
-        else if(pMontoInicial >= 1555141.5/670) 
+        else if(pIngresoFamiliar >= 1555141.5/670) 
             resultado = 5112000/670;
        
-        else if(pMontoInicial >= 1696518/670) 
+        else if(pIngresoFamiliar >= 1696518/670) 
             resultado = 4768000/670;
         
         else
