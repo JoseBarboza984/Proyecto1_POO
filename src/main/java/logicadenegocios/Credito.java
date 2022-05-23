@@ -51,7 +51,7 @@ public abstract class Credito {
     /**
      * Realiza el codigo de los creditos 
      * 
-     * @param pNum  Numero que representa el numero de creditos
+     * @param pNum  Numero que representa el número de creditos
      * @return 
      */
     private  String formatoCodigo(int pNum) {
@@ -63,6 +63,11 @@ public abstract class Credito {
         return codigo+num;
     }
     
+    /**
+     * Establece el atributo estado
+     * 
+     * @param pEstado
+     */
     protected void setEstado(boolean pEstado) {
         if(pEstado)
             estado = "Aceptado";
@@ -81,6 +86,7 @@ public abstract class Credito {
     
     /**
      *  Se obtiene la fecha en formato dia mes año
+     * 
      * @return Cadena de caracteres con la fecha del credito
      */
     public String getFechaSolicitud() {
@@ -100,6 +106,11 @@ public abstract class Credito {
         return moneda;
     }
     
+    /**
+     *  Metodo para establecer la información en una Cadena de caracteres
+     * 
+     * @return  Cadena de caracteres con la información de un credito
+     */
     @Override
     public String toString() {
         String msg = "";
@@ -108,8 +119,14 @@ public abstract class Credito {
         return msg;
     }
     
+    /**
+     * Crea una matriz de objetos con los calculos de la tabla de amortización 
+     *
+     * @param pMonto            Monto final del prestamo solicitado
+     * @param pPlazoAnios     Cantidad de años en lo que se va a pagar el credito
+     * @param pTasaInteres    Tasa de interes que se aplica en el credito
+     * @return      Matriz de objetos con los datos de la tabla de amortización
+     */
     public abstract Object[][] calcularTablaAmortizacion(double pMonto, int pPlazoAnios, double pTasaInteres);
-        
-   
     
 }
