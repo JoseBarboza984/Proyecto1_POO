@@ -48,7 +48,7 @@ public class AdquisicionTerreno extends Credito{
     
     /**
      *  Establece el atributo estado
-     * @param pEstado   Variable que contiene si se debe aceptar o no el credit
+     * @param pEstado   Variable que contiene si se debe aceptar o no el credito
      */
     @Override
     public void setEstado(boolean pEstado) {
@@ -79,7 +79,7 @@ public class AdquisicionTerreno extends Credito{
      */
     private double calcularHonorariosColones(double pMontoInicial) {
         double resultado;
-        double residuo = 0;
+        double residuo;
         
         if (pMontoInicial <= 11000000){
             resultado = pMontoInicial*0.02;
@@ -120,7 +120,7 @@ public class AdquisicionTerreno extends Credito{
      */
     private double calcularHonorariosDolares(double pMontoInicial) {
         double resultado;
-        double residuo = 0;
+        double residuo;
         
         if (pMontoInicial <= 16418){
             resultado = pMontoInicial*0.02;
@@ -153,11 +153,11 @@ public class AdquisicionTerreno extends Credito{
     public Object[] calcularCuotaSF(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior) {
         Object[] array =  new Object[5];
         array[0] = k;
-        double cuota = (pMonto * pTasaInteres)/1- (double) Math.pow((1.0+pTasaInteres), -pPlazoAnios);
-        array[1] = cuota;
-        double interes = cuota*(1-(1/Math.pow(1+pTasaInteres,pPlazoAnios+1-k)));
+        double montoCuota = (pMonto * pTasaInteres)/1- (double) Math.pow((1.0+pTasaInteres), -pPlazoAnios);
+        array[1] = montoCuota;
+        double interes = montoCuota*(1-(1/Math.pow(1+pTasaInteres,pPlazoAnios+1-k)));
         array[2] = interes;
-        double amortizacion = cuota/Math.pow(1+pTasaInteres, pPlazoAnios+1-k);
+        double amortizacion = montoCuota/Math.pow(1+pTasaInteres, pPlazoAnios+1-k);
         array[3] = amortizacion;
         array[4] = pMonto- pAmortizacionAnterior;
         return array;
