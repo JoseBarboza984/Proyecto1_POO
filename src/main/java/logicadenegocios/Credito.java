@@ -4,6 +4,8 @@
  */
 package logicadenegocios;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date; 
 
@@ -46,6 +48,26 @@ public abstract class Credito {
         numeroSolicitud = formatoCodigo(cantSolicitudes);
         gastosFormalizacion = 0.03;
         setFechaSolicitud();
+    }
+    
+    /**
+     *  Metodo constructor del credito
+     * 
+     * @param pTipo         Tipo de credito
+     * @param pMonto      Monto inicial solicitado en el credito
+     * @param pPlazo        Cantidad de años plazo del credito
+     * @param pMoneda    Tipo de moneda en la que se pide el credito
+     */
+    public Credito(String pTipo, double pMonto, int pPlazo, String pMoneda, String pNumeroSolicitud, String pFechaSolicitud) throws ParseException {
+        tipo = pTipo;
+        monto = pMonto;
+        plazo = pPlazo;
+        moneda = pMoneda;
+        cantSolicitudes++;
+        numeroSolicitud = pNumeroSolicitud;
+        gastosFormalizacion = 0.03;
+        DateFormat formato = new SimpleDateFormat("d-MMM-yyyy, HH:mm:ss aaa");
+        fechaSolicitud = formato.parse(pFechaSolicitud);
     }
     
     /**
@@ -112,6 +134,14 @@ public abstract class Credito {
     
     public int getPlazo() {
         return plazo;
+    }
+    
+    public String getTipo() {
+        return tipo;
+    }
+    
+    public String getBaseFechaSolicitud() {
+        return String.valueOf(fechaSolicitud);
     }
     
     /**
