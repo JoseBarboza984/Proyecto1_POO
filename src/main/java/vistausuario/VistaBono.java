@@ -34,7 +34,7 @@ public class VistaBono extends javax.swing.JFrame {
         initComponents();
         
         this.setLocationRelativeTo(null);
-        TextPrompt ingresoTP = new TextPrompt("Nombre",Ingreso);
+        TextPrompt ingresoTP = new TextPrompt("Ingreso familiar bruto",Ingreso);
         
     }
 
@@ -85,6 +85,7 @@ public class VistaBono extends javax.swing.JFrame {
         jPanel3.add(Registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 480, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("¿Desea aplicar al bono de vivienda?");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 290, 20));
 
@@ -147,6 +148,14 @@ public class VistaBono extends javax.swing.JFrame {
         if(bono != false && bono != true)
             JOptionPane.showMessageDialog(this, "Favor elegir una opcion");
         else {
+            if(monto < 7630000 && moneda.equals("Colones")){
+                JOptionPane.showMessageDialog(this, "El monto solicitado es muy pequeño para aplicar a un bono");
+                bono = false;
+            }
+            else if(monto < 7630000/670 && moneda.equals("Dolares")){
+                JOptionPane.showMessageDialog(this, "El monto solicitado es muy pequeño para aplicar a un bono");
+                bono = false;
+            }
             double ingreso = Double.valueOf(Ingreso.getText());
             ConstruccionVivienda credito = new ConstruccionVivienda(tipo, monto, plazo, moneda, TBP, TED, bono, ingreso);
             realizar.registrarCreditoVivienda(solicitante, credito);
