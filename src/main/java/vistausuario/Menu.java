@@ -167,6 +167,16 @@ public class Menu extends javax.swing.JFrame {
 
         Telefono.setBackground(new java.awt.Color(102, 102, 102));
         Telefono.setForeground(new java.awt.Color(255, 255, 255));
+        Telefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TelefonoActionPerformed(evt);
+            }
+        });
+        Telefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TelefonoKeyTyped(evt);
+            }
+        });
         jPanel3.add(Telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 300, 30));
 
         Correo.setBackground(new java.awt.Color(102, 102, 102));
@@ -329,11 +339,10 @@ public class Menu extends javax.swing.JFrame {
         
         if (((caracter < '0' || caracter > '9'))
                 &&(caracter != KeyEvent.VK_BACK_SPACE)
-                &&(caracter != '.' || SalarioLiquido.getText().contains("."))
-                 &&(caracter != ',' || SalarioLiquido.getText().contains(","))){
+                &&(caracter != '.' || SalarioLiquido.getText().contains("."))){
             
             evt.consume();
-            
+            JOptionPane.showMessageDialog(rootPane, "Ingresar solamente números");
         }
         
     }//GEN-LAST:event_SalarioLiquidoKeyTyped
@@ -345,11 +354,10 @@ public class Menu extends javax.swing.JFrame {
         
         if (((caracter < '0' || caracter > '9'))
                 &&(caracter != KeyEvent.VK_BACK_SPACE)
-                &&(caracter != '.' || SalarioBruto.getText().contains("."))
-                &&(caracter != ',' || SalarioBruto.getText().contains(","))){
+                &&(caracter != '.' || SalarioBruto.getText().contains("."))){
             
             evt.consume();
-            
+            JOptionPane.showMessageDialog(rootPane, "Ingresar solamente números");
         }
     }//GEN-LAST:event_SalarioBrutoKeyTyped
 
@@ -393,6 +401,21 @@ public class Menu extends javax.swing.JFrame {
     private void NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreActionPerformed
+
+    private void TelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TelefonoActionPerformed
+
+    private void TelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelefonoKeyTyped
+        char validar=evt.getKeyChar();
+        
+        if(Character.isLetter(validar)){
+            getToolkit().beep();
+            evt.consume();
+            
+            JOptionPane.showMessageDialog(rootPane, "Ingresar solamente números");
+        }
+    }//GEN-LAST:event_TelefonoKeyTyped
     
    
      // @param args the command line arguments
