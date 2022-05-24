@@ -110,7 +110,7 @@
                 <StringItem index="0" value="Hipotecario de terreno"/>
                 <StringItem index="1" value="Hipotecario de vivienda"/>
                 <StringItem index="2" value="Fiduciario"/>
-                <StringItem index="3" value="Prendario"/>
+                <StringItem index="3" value="Prendiario"/>
                 <StringItem index="4" value="Personal"/>
               </StringArray>
             </Property>
@@ -344,6 +344,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
