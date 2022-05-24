@@ -24,11 +24,7 @@ import org.json.simple.parser.ParseException;
  */
 public class Json {
 
-    public static void main(String[] args) {
-
-    }
-
-    private static void leer() {
+    public static void leer() {
         JSONParser jsonParser = new JSONParser();
         
         try(FileReader reader = new FileReader("personas.json")){
@@ -52,33 +48,32 @@ public class Json {
         }
     }
 
-    private static void guardar(Solicitante pSolicitante){
-        JSONObject telefono1 = new JSONObject();
-        telefono1.put("telefono", "2341234");
+    public static void guardar(Solicitante pSolicitante){
         
-        JSONObject telefono2 = new JSONObject();
-        telefono2.put("telefono", "78947894");
+        JSONObject direccion = new JSONObject();
+        direccion.put("provincia", pSolicitante.direccion.getProvincia());
+        direccion.put("canton", pSolicitante.direccion.getCanton());
+        direccion.put("distrito", pSolicitante.direccion.getDistrito());
+        direccion.put("sennas", pSolicitante.direccion.getSennas());
         
-        JSONArray telefonoList = new JSONArray();
-        telefonoList.add(telefono1);
-        telefonoList.add(telefono2);
-        
-        JSONObject persona1 = new JSONObject();
-        persona1.put("nombre", "dirana");
-        persona1.put("apellido", "calderon");
-        persona1.put("codigo", 1);
-        persona1.put("estatura", 1.5);
-        persona1.put("telefonos", telefonoList);
-        
-        JSONObject datosPersona1 = new JSONObject();
-        datosPersona1.put("persona", persona1);
-        
-        
-        JSONArray listaPersona = new JSONArray();
-        listaPersona.add(datosPersona1);
-        
-        try(FileWriter file = new FileWriter("personas.json")){
-            file.write(listaPersona.toJSONString());
+        JSONObject solicitante = new JSONObject();
+        solicitante.put("nombre", pSolicitante.getNombre());
+        solicitante.put("sNombre", pSolicitante.getSNombre());
+        solicitante.put("apellido", pSolicitante.getApellido());
+        solicitante.put("sApellido", pSolicitante.getSApellido());
+        solicitante.put("cedula", pSolicitante.getCedula());
+        solicitante.put("telefono", pSolicitante.getTelefono());
+        solicitante.put("correo", pSolicitante.getCorreo());
+        solicitante.put("salarioBruto", pSolicitante.getSalarioBruto());
+        solicitante.put("salarioLiquido", pSolicitante.getSalarioLiquido());
+        solicitante.put("direccion", direccion);
+        JSONArray listaCreditos = new JSONArray();
+        for(Credito credito:pSolicitante.creditos) {
+            listaCreditos.add(credito);
+        }
+        solicitante.put("creditos", listaCreditos);
+        try(FileWriter file = new FileWriter("DATA\\"+pSolicitante.getCedula()+".txt")){
+            file.write(solicitante.toJSONString());
             file.flush();
         } catch(IOException e){
             e.printStackTrace();
