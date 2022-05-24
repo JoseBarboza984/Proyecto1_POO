@@ -72,7 +72,7 @@ public class CreditoPersonal extends Credito{
      * @param pCuotaAnterior                    Valor del monto de la cuota anterior
      * @return      Array de objetos que contiene los datos {Numero de cuota, Monto de cuota, Interes, Amortización, Deuda}
      */
-    public Object[] calcularCuotaSAl(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior, double pCuotaAnterior) {
+    public Object[] calcularCuotaSAl(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior, double pCuotaAnterior, double pMontoAnterior) {
         Object[] array =  new Object[5];
         array[0] = k;
         double montoCuota;
@@ -87,7 +87,7 @@ public class CreditoPersonal extends Credito{
         array[2] = interes;
         double amortizacion = pMonto/pPlazoAnios;
         array[3] = amortizacion;
-        array[4] = pMonto - pAmortizacionAnterior;
+        array[4] = pMontoAnterior - pAmortizacionAnterior;
         return array;
     }
     
@@ -127,9 +127,11 @@ public class CreditoPersonal extends Credito{
         Object[][] resultados = new Object[pPlazoAnios+1][5];
         double amortizacion = 0;
         double cuota = 0;
+        double monto = this.getMontoFinal();
         int largo = 0;
         for(int i = 0; i < pPlazoAnios; i++) {
-            resultados[i] = calcularCuotaSAl(pMonto, pPlazoAnios, pTasaInteres, i+1, amortizacion, cuota);
+            resultados[i] = calcularCuotaSAl(this.getMontoFinal(), pPlazoAnios, pTasaInteres, i+1, amortizacion, cuota, monto);
+            monto = (double) resultados [i][4];
             amortizacion = (double) resultados [i][3];
             cuota = (double) resultados[i][1];
             largo++;
