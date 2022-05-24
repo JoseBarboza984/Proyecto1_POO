@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
@@ -39,13 +41,14 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.swing.JOptionPane;
+import vistausuario.*;
 
 /**
  *
  * @author Jose
  */
 public class funciones {
-    static ArrayList<Solicitante> solicitantes;
+    Menu menu = new Menu();
     /*
     public static void main(String[] args) throws SolicitanteAlreadyExistException  {//throws IOException, DocumentException
         solicitantes = new ArrayList<>(); //String pTipo, double pMonto, int pPlazo, String pMoneda, Date pFechaSolicitud
@@ -94,22 +97,67 @@ public class funciones {
         
     }*/
     
-    public static void registrarSolicitante(Solicitante pSolicitante) throws SolicitanteAlreadyExistException{
-        if(buscarSolicitante(pSolicitante.getCedula()) != null)
+    public void registrarSolicitante(Solicitante pSolicitante) throws SolicitanteAlreadyExistException {
+        if(buscarSolicitanteSinExcepcion(pSolicitante.getCedula()) != null)
             throw new SolicitanteAlreadyExistException(String.valueOf(pSolicitante.getCedula()));
-        solicitantes.add(pSolicitante);
+        menu.solicitantes.add(pSolicitante);
+        menu.dispose();
         return;
     }
     
-    public static Solicitante buscarSolicitante(int pCedula) {
-        for(Solicitante solicitante:solicitantes) {
+    public Solicitante buscarSolicitanteSinExcepcion(int pCedula) {
+        for(Solicitante solicitante:menu.solicitantes) {
             if(solicitante.getCedula() == pCedula)
                 return solicitante;
         }
         return null;
     }
     
-    public static Credito buscarCredito(Solicitante pSolicitante, String pNumSolicitud) {
+    public Solicitante buscarSolicitante(int pCedula) throws SolicitanteDoesNotExistException{
+        for(Solicitante solicitante:menu.solicitantes) {
+            if(solicitante.getCedula() == pCedula){
+                return solicitante;}
+        }
+        throw new SolicitanteDoesNotExistException(String.valueOf(pCedula));
+    }
+    
+    public void registrarCreditoTerreno(Solicitante pSolicitante, AdquisicionTerreno pCredito) {
+        pSolicitante.setCredito(pCredito);
+    }
+    
+    public void registrarCreditoVivienda(Solicitante pSolicitante, ConstruccionVivienda pCredito) {
+        pSolicitante.setCredito(pCredito);
+    }
+    
+    public void registrarCreditoFiduciario(Solicitante pSolicitante, CreditoFiduciario pCredito) {
+        pSolicitante.setCredito(pCredito);
+    }
+    
+    public static void registrarFiadores(CreditoFiduciario pCredito, Fiador[] pFiador, double pMonto, double pCuota) throws FiadorDoesNotApplyException{
+        boolean validacion = pCredito.setFiadores(pFiador, pMonto, pCuota);
+        if(validacion = false){
+            String info = "";
+            for(Fiador fiador:pFiador) 
+                info += String.valueOf(fiador.getCedula());
+            throw new FiadorDoesNotApplyException(info);
+        }
+    }
+    
+    public void registrarCreditoPersonal(Solicitante pSolicitante, CreditoPersonal pCredito) {
+        pSolicitante.setCredito(pCredito);
+    }
+    
+    public void registrarCreditoPrendario(Solicitante pSolicitante, CreditoPrendiario pCredito) {
+        pSolicitante.setCredito(pCredito);
+    }
+    
+    public void registrarPrenda(CreditoPrendiario pCredito, String Descripccion, double Monto) throws PrendaDoesNotApplyException {
+        boolean validacion = pCredito.setPrenda(Descripccion, Monto);
+        if(validacion = false)
+            throw new PrendaDoesNotApplyException(Descripccion);
+    }
+    
+    public Credito buscarCredito(Solicitante pSolicitante, String pNumSolicitud) {
         for(Credito credito:pSolicitante.creditos) {
             if(credito.getNumeroSolicitud().equals(pNumSolicitud)) 
                 return credito;
@@ -117,7 +165,7 @@ public class funciones {
         return null;
     }
     
-    public static void guardarPDF(Object[][] pDatos, Solicitante pSolicitante, String infoCredito) throws IOException, DocumentException {
+    public void guardarPDF(Object[][] pDatos, Solicitante pSolicitante, String infoCredito) throws IOException, DocumentException {
         Document documento = new Document();
         Date fecha = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
@@ -172,7 +220,7 @@ public class funciones {
           }
     }
     
-    public static void enviarCorreo(String nombrePDF, String correo){
+    public void enviarCorreo(String nombrePDF, String correo){
          try{
           Properties propiedad = new Properties();
           propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
