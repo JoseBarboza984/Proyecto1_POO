@@ -154,12 +154,15 @@ public class AdquisicionTerreno extends Credito{
         Object[] array =  new Object[5];
         array[0] = k;
         double montoCuota = (pMonto * pTasaInteres)/1- (double) Math.pow((1.0+pTasaInteres), -pPlazoAnios);
+        montoCuota = Math.round(montoCuota * 100.0) / 100.0;            //Integrar
         array[1] = montoCuota;
         double interes = montoCuota*(1-(1/Math.pow(1+pTasaInteres,pPlazoAnios+1-k)));
+        interes = Math.round(interes * 100.0) / 100.0;                              //Integrar
         array[2] = interes;
         double amortizacion = montoCuota/Math.pow(1+pTasaInteres, pPlazoAnios+1-k);
+        amortizacion  = Math.round(amortizacion * 100.0) / 100.0;           //Integrar
         array[3] = amortizacion;
-        array[4] = pMonto- pAmortizacionAnterior;
+        array[4] = this.getMontoFinal()- pAmortizacionAnterior;
         return array;
     }
     
@@ -172,14 +175,16 @@ public class AdquisicionTerreno extends Credito{
      */
     public Object[] calcularTotales(Object[][] pMatriz, int pPlazoAnios) {
         Object[] array = new Object[5];
-        array[0] = "Totales'";
+        array[0] = "Totales";  //Limpiar
         array[1] = "";
         double interes = 0;
         double amortizacion = 0;
-        for (int i = 0; i < pPlazoAnios; i++) {
+        for (int i = 0; i < pPlazoAnios; i++) { 
             interes = interes + Double.valueOf(String.valueOf(pMatriz[i][2]));
             amortizacion = amortizacion + Double.valueOf(String.valueOf(pMatriz[i][3]));
         }
+        interes = Math.round(interes * 100.0) / 100.0;
+        amortizacion = Math.round(amortizacion * 100.0) / 100.0;
         array[2] = interes;
         array[3] = amortizacion;
         array[4] = 0;
@@ -198,8 +203,8 @@ public class AdquisicionTerreno extends Credito{
     public Object[][] calcularTablaAmortizacion(double pMonto, int pPlazoAnios, double pTasaInteres) {
         Object[][] resultados = new Object[pPlazoAnios+1][5];
         double amortizacion = 0;
-        int largo = 1;
-        for(int i = 0; i < pPlazoAnios; i++) {
+        int largo = 0;
+        for(int i = 0; i < pPlazoAnios; i++) { 
             resultados[i] = calcularCuotaSF(pMonto, pPlazoAnios, pTasaInteres, i+1,  amortizacion);
             amortizacion = (double) resultados [i][3];
             largo++;
