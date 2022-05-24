@@ -15,6 +15,9 @@ public class VistaPDF extends javax.swing.JFrame {
      */
     public VistaPDF() {
         initComponents();
+        
+        TextPrompt play = new TextPrompt("Cédula",Cedula);
+        TextPrompt play1 = new TextPrompt("Número de Solicitud",NumeroSolicitud);
     }
 
     /**
@@ -32,9 +35,9 @@ public class VistaPDF extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         Guardar = new javax.swing.JButton();
         Regresar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        Cedula = new javax.swing.JTextField();
+        NumeroSolicitud = new javax.swing.JTextField();
+        jRadioButton1 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -54,13 +57,13 @@ public class VistaPDF extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos para generar PDF", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Guardar.setText("Guardar");
+        Guardar.setText("Generar PDF");
         Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GuardarActionPerformed(evt);
             }
         });
-        jPanel3.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(697, 467, -1, -1));
+        jPanel3.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 460, 200, -1));
 
         Regresar.setText("Regresar");
         Regresar.addActionListener(new java.awt.event.ActionListener() {
@@ -68,17 +71,23 @@ public class VistaPDF extends javax.swing.JFrame {
                 RegresarActionPerformed(evt);
             }
         });
-        jPanel3.add(Regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(603, 467, -1, -1));
+        jPanel3.add(Regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, -1, -1));
 
-        jTextField1.setBackground(new java.awt.Color(51, 51, 51));
-        jTextField1.setText("Nombre");
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 60, 200, 30));
+        Cedula.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel3.add(Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 60, 200, 30));
 
-        jTextField2.setText("Apellido");
-        jPanel3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 120, 200, 30));
+        NumeroSolicitud.setBackground(new java.awt.Color(51, 51, 51));
+        NumeroSolicitud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NumeroSolicitudActionPerformed(evt);
+            }
+        });
+        jPanel3.add(NumeroSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 120, 200, 30));
 
-        jTextField3.setText("jTextField3");
-        jPanel3.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 180, 200, 30));
+        jRadioButton1.setBackground(new java.awt.Color(51, 51, 51));
+        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jRadioButton1.setText("Enviar al correo");
+        jPanel3.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 170, 200, 30));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 780, 500));
 
@@ -94,12 +103,16 @@ public class VistaPDF extends javax.swing.JFrame {
     private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
         // TODO add your handling code here:
         
-        Menu newframe = new Menu();
+        //Menu newframe = new Menu();
         
-        newframe.setVisible(true);
+        //newframe.setVisible(true);
         
         this.dispose();
     }//GEN-LAST:event_RegresarActionPerformed
+
+    private void NumeroSolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumeroSolicitudActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NumeroSolicitudActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,14 +151,14 @@ public class VistaPDF extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Cedula;
     private javax.swing.JButton Guardar;
+    private javax.swing.JTextField NumeroSolicitud;
     private javax.swing.JButton Regresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JRadioButton jRadioButton1;
     // End of variables declaration//GEN-END:variables
 }
