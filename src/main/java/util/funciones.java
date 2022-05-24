@@ -147,7 +147,7 @@ public class funciones {
         pSolicitante.setCredito(pCredito);
     }
     
-    public void registrarCreditoPrendario(Solicitante pSolicitante, CreditoPrendiario pCredito) {
+    public void registrarCreditoPrendiario(Solicitante pSolicitante, CreditoPrendiario pCredito) {
         pSolicitante.setCredito(pCredito);
     }
     
@@ -165,7 +165,7 @@ public class funciones {
         return null;
     }
     
-    public void guardarPDF(Object[][] pDatos, Solicitante pSolicitante, String infoCredito) throws IOException, DocumentException {
+    public void guardarPDF(Object[][] pDatos, Solicitante pSolicitante, String infoCredito, boolean pCorreo) throws IOException, DocumentException {
         Document documento = new Document();
         Date fecha = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
@@ -213,7 +213,8 @@ public class funciones {
             documento.add(Chunk.NEWLINE); 
             documento.close(); 
             JOptionPane.showMessageDialog(null,"PDF Generado"); 
-            enviarCorreo(nombrePDF, pSolicitante.getCorreo());
+            if(pCorreo)
+                enviarCorreo(nombrePDF, pSolicitante.getCorreo());
           } 
           catch (FileNotFoundException | DocumentException e) {
               System.err.println(e.getMessage());
