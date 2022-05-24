@@ -14,7 +14,7 @@ import java.util.Arrays;
  * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class CreditoFiduciario extends Credito {
-    ArrayList<Fiador> fiadores;
+    public ArrayList<Fiador> fiadores;
     
     /**
      * Metodo constructor del credito fiduciario
