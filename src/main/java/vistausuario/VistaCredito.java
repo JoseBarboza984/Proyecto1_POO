@@ -302,6 +302,7 @@ public class VistaCredito extends javax.swing.JFrame {
                     VistaBono newframe = new VistaBono();
         
                     newframe.setVisible(true);
+                    this.dispose();
                     
                     /**boolean bono = newframe.bono;
                     double ingreso = 1650000;
@@ -320,6 +321,7 @@ public class VistaCredito extends javax.swing.JFrame {
                     VistaFiador newframe = new VistaFiador();
         
                     newframe.setVisible(true);
+                    this.dispose();
                     /**
                     Fiador fiador;
                     int cantFiadores = newframe.cantidad;
@@ -371,6 +373,7 @@ public class VistaCredito extends javax.swing.JFrame {
                     VistaPrenda newframe = new VistaPrenda();
         
                     newframe.setVisible(true);
+                    this.dispose();
                     
                     /**
                     CreditoPrendiario credito = new CreditoPrendiario(tipo, monto, plazo, moneda);
