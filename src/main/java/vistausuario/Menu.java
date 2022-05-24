@@ -29,8 +29,8 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         //solicitantes = new ArrayList<>();
-        //Solicitante solicitante = new Solicitante("Jose", "Daniel", "Barboza", "Campos", 702870837, 87175835, "jd.2001.bc@gmail.com",  300000.0, 950000.0, "Limon", "Poccoci", "Guapiles", "Centro");
-        //solicitantes.add(solicitante);
+        Solicitante solicitanteBase = new Solicitante("Jose", "Daniel", "Barboza", "Campos", 702870837, 87175835, "jd.2001.bc@gmail.com",  300000.0, 950000.0, "Limon", "Poccoci", "Guapiles", "Centro");
+        solicitantes.add(solicitanteBase);
         initComponents();
         cerrar();
         this.setLocationRelativeTo(null);
@@ -344,7 +344,6 @@ public class Menu extends javax.swing.JFrame {
             evt.consume();
             JOptionPane.showMessageDialog(rootPane, "Ingresar solamente números");
         }
-        
     }//GEN-LAST:event_SalarioLiquidoKeyTyped
 
     private void SalarioBrutoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SalarioBrutoKeyTyped
