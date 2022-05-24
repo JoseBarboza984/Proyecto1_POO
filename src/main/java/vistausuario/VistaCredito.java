@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import util.*;
 import logicadenegocios.*;
+import static vistausuario.Menu.solicitantes;
 
 
 /**
@@ -32,12 +33,14 @@ public class VistaCredito extends javax.swing.JFrame {
     public static double TED;
     obtenervalores obtenerTasa = new obtenervalores();
     funciones realizar = new funciones();
+    Json almacenamiento;
     
 
     /**
      * Creates new form CreditoHipotecario
      */
     public VistaCredito() {
+        this.almacenamiento = new Json();
         TBP = obtenerTasa.getTBP();
         TED = obtenerTasa.getTED();
         initComponents();
@@ -295,6 +298,7 @@ public class VistaCredito extends javax.swing.JFrame {
                         DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
                         tblModel.addRow(row);
                     }
+                    almacenamiento.guardar(solicitantes);
                 }
                 else if(TipoCredito.getSelectedItem().equals("Hipotecario de vivienda")) {
                     tipo = "Hipotecario de vivienda";
@@ -366,6 +370,7 @@ public class VistaCredito extends javax.swing.JFrame {
                         DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
                         tblModel.addRow(row);
                     }
+                    almacenamiento.guardar(solicitantes);
                 }
                 else if (TipoCredito.getSelectedItem().equals("Prendiario")) {      ///
                     tipo = "prendario";
