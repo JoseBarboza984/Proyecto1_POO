@@ -27,12 +27,15 @@ public class CreditoFiduciario extends Credito {
     public CreditoFiduciario(String pTipo, double pMonto, int pPlazo, String pMoneda) {
         super(pTipo, pMonto, pPlazo, pMoneda);
         super.gastosFormalizacion = pMonto * 0.03;
-        
+        double tasa = 0;
         if(pMoneda.equals("Colones"))
-            super.tasaInteres = 0.13;
+            tasa = 0.13;
         else if(pMoneda.equals("Dolares"))
-            super.tasaInteres = 0.11;
+            tasa = 0.11;
+        super.tasaInteres = tasa;
         fiadores = new ArrayList<>();
+        
+        super.cuota = (pMonto * tasa)/1- (double) Math.pow((1.0+tasa), -pPlazo);
     }
     
     /**
@@ -40,8 +43,12 @@ public class CreditoFiduciario extends Credito {
      * 
      * @return      Suma de monto inicial del credito con los gastos extras del credito
      */
-    double getMontoFinal() {
+    public double getMontoFinal() {
         return super.monto+super.gastosFormalizacion;
+    }
+    
+    public double getCuota() {
+        return super.cuota;
     }
     
     /**
@@ -67,7 +74,7 @@ public class CreditoFiduciario extends Credito {
      * Metodo que establece los fiadores en el array del credito si cumplen con los requisitos
      * 
      * @param pFiador         Array de fiadores
-     * @param pMonto        Monto final del credito
+     * @param pMonto        Monto inicial del credito
      * @param pCuota        Monto de la cuota del credito
      * @return      true(En caso de que cumplan los requisitos) y false(Si no)
      */
@@ -149,9 +156,11 @@ public class CreditoFiduciario extends Credito {
     public Object[][] calcularTablaAmortizacion(double pMonto, int pPlazoAnios, double pTasaInteres) {
         Object[][] resultados = new Object[pPlazoAnios+1][5];
         double amortizacion = 0;
+        double monto = this.getMontoFinal();
         int largo = 0;
         for(int i = 0; i < pPlazoAnios; i++) {
-            resultados[i] = calcularCuotaSF(pMonto, pPlazoAnios, pTasaInteres, i+1, amortizacion);
+            resultados[i] = calcularCuotaSF(monto, pPlazoAnios, pTasaInteres, i+1, amortizacion);
+            monto = (double) resultados [i][4];
             amortizacion = (double) resultados [i][3];
             largo++;
         }
