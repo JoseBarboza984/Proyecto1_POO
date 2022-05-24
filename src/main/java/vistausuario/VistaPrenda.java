@@ -9,8 +9,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import logicadenegocios.Credito;
 import logicadenegocios.CreditoPrendiario;
+import util.Json;
 import util.funciones;
-import static vistausuario.VistaCredito.jTable1;
+import static vistausuario.Menu.solicitantes;
+
 import static vistausuario.VistaCredito.moneda;
 import static vistausuario.VistaCredito.monto;
 import static vistausuario.VistaCredito.plazo;
@@ -26,6 +28,7 @@ public class VistaPrenda extends javax.swing.JFrame {
     public double valor;
     funciones realizar;
     VistaCredito info;
+    Json almacenamiento = new Json();
 
     /**
      * Creates new form Creditos
@@ -129,6 +132,7 @@ public class VistaPrenda extends javax.swing.JFrame {
                 DefaultTableModel tblModel = (DefaultTableModel) info.jTable1.getModel();
                 tblModel.addRow(row);
             }
+            almacenamiento.guardar(solicitantes);
             info.setVisible(true);
             this.dispose();
         }
