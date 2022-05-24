@@ -150,10 +150,10 @@ public class AdquisicionTerreno extends Credito{
      * @param pAmortizacionAnterior         Valor de la amortización en la cuota anterior
      * @return      Array de objetos que contiene los datos {Numero de cuota, Monto de cuota, Interes, Amortización, Deuda}
      */
-    public Object[] calcularCuotaSF(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior) {
+    public Object[] calcularCuotaSF(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior, double pMontoAnterior) {
         Object[] array =  new Object[5];
         array[0] = k;
-        double montoCuota = (pMonto * pTasaInteres)/1- (double) Math.pow((1.0+pTasaInteres), -pPlazoAnios);
+        double montoCuota = (pMonto * pTasaInteres)/(1- (double) Math.pow((1.0+pTasaInteres), -pPlazoAnios));
         montoCuota = Math.round(montoCuota * 100.0) / 100.0;            //Integrar
         array[1] = montoCuota;
         double interes = montoCuota*(1-(1/Math.pow(1+pTasaInteres,pPlazoAnios+1-k)));
@@ -162,7 +162,7 @@ public class AdquisicionTerreno extends Credito{
         double amortizacion = montoCuota/Math.pow(1+pTasaInteres, pPlazoAnios+1-k);
         amortizacion  = Math.round(amortizacion * 100.0) / 100.0;           //Integrar
         array[3] = amortizacion;
-        array[4] = this.getMontoFinal()- pAmortizacionAnterior;
+        array[4] = Math.round((pMontoAnterior- pAmortizacionAnterior)* 100.0) / 100.0;
         return array;
     }
     
@@ -175,7 +175,7 @@ public class AdquisicionTerreno extends Credito{
      */
     public Object[] calcularTotales(Object[][] pMatriz, int pPlazoAnios) {
         Object[] array = new Object[5];
-        array[0] = "Totales";  //Limpiar
+        array[0] = "Totales";
         array[1] = "";
         double interes = 0;
         double amortizacion = 0;
@@ -206,7 +206,7 @@ public class AdquisicionTerreno extends Credito{
         double monto = this.getMontoFinal();
         int largo = 0;
         for(int i = 0; i < pPlazoAnios; i++) { 
-            resultados[i] = calcularCuotaSF(monto, pPlazoAnios, pTasaInteres, i+1,  amortizacion);
+            resultados[i] = calcularCuotaSF(this.getMontoFinal(), pPlazoAnios, pTasaInteres, i+1,  amortizacion, monto);
             monto = (double) resultados [i][4];
             amortizacion = (double) resultados [i][3];
             largo++;
@@ -214,5 +214,4 @@ public class AdquisicionTerreno extends Credito{
         resultados[largo] = calcularTotales(resultados, pPlazoAnios);
         return resultados;
     }
-    
 }
