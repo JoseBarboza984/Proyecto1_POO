@@ -269,7 +269,7 @@ public class ConstruccionVivienda extends Credito{
      * @return      Array de objetos que contiene los datos {Numero de cuota, Monto de cuota, Interes, Amortización, Deuda}
      */
     public Object[] calcularCuotaSF(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior) {
-        Object[] array =  new Object[4];
+        Object[] array =  new Object[5];
         array[0] = k;
         double montoCuota = (pMonto * pTasaInteres)/1- (double) Math.pow((1.0+pTasaInteres), -pPlazoAnios);
         array[1] = montoCuota;
