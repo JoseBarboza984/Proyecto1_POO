@@ -9,5 +9,13 @@ package vistausuario;
  * @author Joshua
  */
 class DefaultTableMode1 {
+
+    void removeRow(int selectedRow) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    Object getDataVector() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
