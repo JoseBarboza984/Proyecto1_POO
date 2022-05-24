@@ -4,11 +4,21 @@
  */
 package vistausuario;
 
+import com.itextpdf.text.DocumentException;
+import excepciones.SolicitanteDoesNotExistException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import util.*;
+import logicadenegocios.*;
+
 /**
  *
  * @author Joshua
  */
 public class VistaPDF extends javax.swing.JFrame {
+    funciones realizar = new funciones();
+    boolean correo = false;
 
     /**
      * Creates new form GenerarPDF
@@ -87,6 +97,11 @@ public class VistaPDF extends javax.swing.JFrame {
         jRadioButton1.setBackground(new java.awt.Color(51, 51, 51));
         jRadioButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jRadioButton1.setText("Enviar al correo");
+        jRadioButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButton1MouseClicked(evt);
+            }
+        });
         jPanel3.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 170, 200, 30));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 780, 500));
@@ -97,15 +112,22 @@ public class VistaPDF extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        // TODO add your handling code here:
+        try {
+            Solicitante solicitante = realizar.buscarSolicitante(Integer.valueOf(Cedula.getText()));
+            Credito cre = realizar.buscarCredito(solicitante, NumeroSolicitud.getText());
+            Object[][] matriz = cre.calcularTablaAmortizacion(cre.getMonto(), cre.getPlazo(), cre.getTasaInteres());
+            realizar.guardarPDF(matriz, solicitante, cre.toString(), correo);
+        } catch (SolicitanteDoesNotExistException | IOException | DocumentException ex) {
+            Logger.getLogger(VistaPDF.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
         // TODO add your handling code here:
         
-        //Menu newframe = new Menu();
+        Menu newframe = new Menu();
         
-        //newframe.setVisible(true);
+        newframe.setVisible(true);
         
         this.dispose();
     }//GEN-LAST:event_RegresarActionPerformed
@@ -113,6 +135,10 @@ public class VistaPDF extends javax.swing.JFrame {
     private void NumeroSolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumeroSolicitudActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NumeroSolicitudActionPerformed
+
+    private void jRadioButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton1MouseClicked
+            correo = true;
+    }//GEN-LAST:event_jRadioButton1MouseClicked
 
     /**
      * @param args the command line arguments
