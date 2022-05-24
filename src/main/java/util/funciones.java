@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import logicadenegocios.*;
+import excepciones.*;
 
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
@@ -45,35 +46,59 @@ import javax.swing.JOptionPane;
  */
 public class funciones {
     static ArrayList<Solicitante> solicitantes;
-    
-    public static void main(String[] args) throws IOException, DocumentException {
+    /*
+    public static void main(String[] args) throws SolicitanteAlreadyExistException  {//throws IOException, DocumentException
         solicitantes = new ArrayList<>(); //String pTipo, double pMonto, int pPlazo, String pMoneda, Date pFechaSolicitud
         Solicitante solicitante = new Solicitante("Jose", "Daniel", "Barboza", "Campos", 702870837, 87175835, "jd.2001.bc@gmail.com",  300000.0, 950000.0, "Limon", "Poccoci", "Guapiles", "Centro");
-        boolean respuesta = registrarSolicitante(solicitante);
-        if(respuesta)
-            System.out.println("Se regsitro el solicitante con exito");
-        else
-            System.out.println("Se regsitro el solicitante con exito");
+        registrarSolicitante(solicitante);
         solicitante = buscarSolicitante(702870837);
         if(solicitante != null) {
             CreditoPersonal credito = new CreditoPersonal("Personal", 1000000, 5, "Colones");
             credito.setEstado(credito.verificarSolicitante(solicitante.getSalarioLiquido()));
             solicitante.setCredito(credito);
             System.out.println("Se regsitro el credito");
+            Json x = new Json();
+            x.guardar(solicitante);
+            return;
          }
-         System.out.println("Se regsitro el credito");
-        
+        System.out.println("No se regsitro el credito");
         Credito cre = buscarCredito(buscarSolicitante(702870837), "CRE0001");
         System.out.println(cre.toString());
         Object[][] matriz = cre.calcularTablaAmortizacion(1000000, 5, cre.getTasaInteres());
-        guardarPDF(matriz, buscarSolicitante(702870837), cre.toString());
+        //guardarPDF(matriz, buscarSolicitante(702870837), cre.toString());
+    }*/
+    /**
+    public static void actionRegistrarSolicitante() {
+        String nombre;
+        String sNombre;
+        String apellido;
+        String sApellido;
+        int cedula;
+        int telefono;
+        String correo;
+        double  salarioBruto;
+        double salarioLiquido;
+        String provincia;
+        String canton;
+        String distrito;
+        String sennas;
+        try{
+            Solicitante solicitante = new Solicitante(nombre, sNombre, apellido, sApellido, cedula, telefono, correo, salarioBruto, salarioLiquido, provincia, canton, distrito, sennas);
+            registrarSolicitante(solicitante);
+        } catch(SolicitanteAlreadyExistException e) {
+            System.err.println(e.getMessage());
+        }
     }
     
-    public static boolean registrarSolicitante(Solicitante pSolicitante) {
+    public static void actionRegistrarCreditoTerreno() {
+        
+    }*/
+    
+    public static void registrarSolicitante(Solicitante pSolicitante) throws SolicitanteAlreadyExistException{
         if(buscarSolicitante(pSolicitante.getCedula()) != null)
-            return false;
+            throw new SolicitanteAlreadyExistException(String.valueOf(pSolicitante.getCedula()));
         solicitantes.add(pSolicitante);
-        return true;
+        return;
     }
     
     public static Solicitante buscarSolicitante(int pCedula) {
