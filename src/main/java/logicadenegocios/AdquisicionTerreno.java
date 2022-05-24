@@ -4,6 +4,8 @@
  */
 package logicadenegocios;
 
+import java.text.ParseException;
+
 
 /**
  *  Clase hija de Credito, representa el credito hipotecario de adquisición de terreno
@@ -38,12 +40,39 @@ public class AdquisicionTerreno extends Credito{
     }
     
     /**
+     * Metodo constructor del credito hipotecario de adquisición de terreno
+     * 
+     * @param pTipo                             Tipo de credito
+     * @param pMonto                          Monto inicial solicitado en el credito
+     * @param pPlazo                            Cantidad de años plazo del credito
+     * @param pMoneda                        Tipo de moneda en la que se pide el credito
+     * @param pAvaluo                          Monto de avaluo
+     * @param pNumeroSolicitud          Identificador del credito
+     * @param pFechaSolicitud             Fecha de solicitud
+     */
+    public AdquisicionTerreno(String pTipo, double pMonto, int pPlazo, String pMoneda, double pAvaluo, String pNumeroSolicitud, String pFechaSolicitud) throws ParseException {
+        super(pTipo, pMonto, pPlazo, pMoneda, pNumeroSolicitud, pFechaSolicitud);
+        avaluo = pAvaluo;
+        super.gastosFormalizacion = pMonto*0.0075;
+        if("Colones".equals(pMoneda)) {
+            super.honorariosLegales = calcularHonorariosColones(pMonto);
+        }
+        else if("Dolares".equals(pMoneda)) {
+            super.honorariosLegales = calcularHonorariosDolares(pMonto);
+        }
+    }
+    
+    /**
      * Calcula el monto final del credito
      * 
      * @return      Suma de monto inicial del credito con los gastos extras del credito
      */
     public double getMontoFinal() {
         return avaluo+super.gastosFormalizacion+super.honorariosLegales+super.monto;
+    }
+    
+    public double getAvaluo() {
+        return avaluo;
     }
     
     /**
