@@ -82,10 +82,13 @@ public class CreditoPersonal extends Credito{
         }
         else
             montoCuota = pCuotaAnterior - (pTasaInteres * (pMonto/pPlazoAnios));
+        montoCuota = Math.round(montoCuota * 100.0) / 100.0;            //Integrar
         array[1] = montoCuota;
         double interes = (pPlazoAnios-k+1) * ((pMonto*pTasaInteres)/pPlazoAnios);
+        interes = Math.round(interes * 100.0) / 100.0;                              //Integrar
         array[2] = interes;
         double amortizacion = pMonto/pPlazoAnios;
+        amortizacion  = Math.round(amortizacion * 100.0) / 100.0;           //Integrar
         array[3] = amortizacion;
         array[4] = pMontoAnterior - pAmortizacionAnterior;
         return array;
@@ -108,6 +111,8 @@ public class CreditoPersonal extends Credito{
             interes = interes + Double.valueOf(String.valueOf(pMatriz[i][2]));
             amortizacion = amortizacion + Double.valueOf(String.valueOf(pMatriz[i][3]));
         }
+        interes = Math.round(interes * 100.0) / 100.0;
+        amortizacion = Math.round(amortizacion * 100.0) / 100.0;
         array[2] = interes;
         array[3] = amortizacion;
         array[4] = 0;
