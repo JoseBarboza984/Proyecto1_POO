@@ -11,7 +11,7 @@ package logicadenegocios;
  * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class CreditoPrendiario extends Credito {
-    private Prenda prenda;      
+    public Prenda prenda;      
     
     /**
      * Metodo constructor del credito prendario
