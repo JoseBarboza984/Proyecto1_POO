@@ -214,9 +214,11 @@ public class CreditoPrendiario extends Credito {
     public Object[][] calcularTablaAmortizacion(double pMonto, int pPlazoAnios, double pTasaInteres) {
         Object[][] resultados = new Object[pPlazoAnios+1][5];
         double amortizacion = 0;
+        double monto = this.getMontoFinal();
         int largo = 0;
         for(int i = 0; i < pPlazoAnios; i++) {
-            resultados[i] = calcularCuotaSAm(pMonto, pPlazoAnios, pTasaInteres, i+1, amortizacion);
+            resultados[i] = calcularCuotaSAm(monto, pPlazoAnios, pTasaInteres, i+1, amortizacion);
+            monto = (double) resultados [i][4];
             amortizacion = (double) resultados [i][3];
             largo++;
         }
