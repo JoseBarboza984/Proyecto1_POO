@@ -5,15 +5,13 @@
 package vistausuario;
 
 import java.awt.event.KeyEvent;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import logicadenegocios.ConstruccionVivienda;
 import logicadenegocios.Credito;
+import util.Json;
 import util.funciones;
+import static vistausuario.Menu.solicitantes;
 import static vistausuario.VistaCredito.*;
 
 /**
@@ -24,11 +22,13 @@ public class VistaBono extends javax.swing.JFrame {
     public boolean bono;
     funciones realizar;
     VistaCredito info;
+    Json almacenamiento;
 
     /**
      * Creates new form Creditos
      */
     public VistaBono() {
+        this.almacenamiento = new Json();
         this.realizar = new funciones();
         this.info = new VistaCredito();
         initComponents();
@@ -165,6 +165,7 @@ public class VistaBono extends javax.swing.JFrame {
                 DefaultTableModel tblModel = (DefaultTableModel) info.jTable1.getModel();
                 tblModel.addRow(row);
             }
+            almacenamiento.guardar(solicitantes);
             info.setVisible(true);
             this.dispose();
         }
