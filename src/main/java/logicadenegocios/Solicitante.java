@@ -85,6 +85,9 @@ public class Solicitante {
     public double getSalarioLiquido() {
         return salarioLiquido;
     }
+    public double getSalarioBruto() {
+        return salarioBruto;
+    }
     
     /**
      *  Metodo para establecer la información en una Cadena de caracteres
