@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,8 +24,9 @@ import org.json.simple.parser.ParseException;
  * @author dirana
  */
 public class Json {
+    funciones realizar = new funciones();
 
-    public static void leer() {
+    public void leer() {
         JSONParser jsonParser = new JSONParser();
         
         try(FileReader reader = new FileReader("personas.json")){
@@ -48,32 +50,77 @@ public class Json {
         }
     }
 
-    public static void guardar(Solicitante pSolicitante){
-        
-        JSONObject direccion = new JSONObject();
-        direccion.put("provincia", pSolicitante.direccion.getProvincia());
-        direccion.put("canton", pSolicitante.direccion.getCanton());
-        direccion.put("distrito", pSolicitante.direccion.getDistrito());
-        direccion.put("sennas", pSolicitante.direccion.getSennas());
-        
-        JSONObject solicitante = new JSONObject();
-        solicitante.put("nombre", pSolicitante.getNombre());
-        solicitante.put("sNombre", pSolicitante.getSNombre());
-        solicitante.put("apellido", pSolicitante.getApellido());
-        solicitante.put("sApellido", pSolicitante.getSApellido());
-        solicitante.put("cedula", pSolicitante.getCedula());
-        solicitante.put("telefono", pSolicitante.getTelefono());
-        solicitante.put("correo", pSolicitante.getCorreo());
-        solicitante.put("salarioBruto", pSolicitante.getSalarioBruto());
-        solicitante.put("salarioLiquido", pSolicitante.getSalarioLiquido());
-        solicitante.put("direccion", direccion);
-        JSONArray listaCreditos = new JSONArray();
-        for(Credito credito:pSolicitante.creditos) {
-            listaCreditos.add(credito);
+    public void guardar(ArrayList<Solicitante> pSolicitantes){
+        JSONArray listaSolicitante = new JSONArray();
+        for(Solicitante pSolicitante: pSolicitantes){
+            JSONObject direccion = new JSONObject();
+            direccion.put("provincia", pSolicitante.direccion.getProvincia());
+            direccion.put("canton", pSolicitante.direccion.getCanton());
+            direccion.put("distrito", pSolicitante.direccion.getDistrito());
+            direccion.put("sennas", pSolicitante.direccion.getSennas());
+
+            JSONObject solicitante = new JSONObject();
+            solicitante.put("nombre", pSolicitante.getNombre());
+            solicitante.put("sNombre", pSolicitante.getSNombre());
+            solicitante.put("apellido", pSolicitante.getApellido());
+            solicitante.put("sApellido", pSolicitante.getSApellido());
+            solicitante.put("cedula", pSolicitante.getCedula());
+            solicitante.put("telefono", pSolicitante.getTelefono());
+            solicitante.put("correo", pSolicitante.getCorreo());
+            solicitante.put("salarioBruto", pSolicitante.getSalarioBruto());
+            solicitante.put("salarioLiquido", pSolicitante.getSalarioLiquido());
+            solicitante.put("direccion", direccion);
+
+            JSONArray listaCreditos = new JSONArray();
+            for(Credito pCredito:pSolicitante.creditos) {
+                JSONObject credito = new JSONObject();
+                credito.put("tipo", pCredito.getTipo());
+                credito.put("monto", pCredito.getMonto());
+                credito.put("plazo", pCredito.getPlazo());
+                credito.put("moneda", pCredito.getMoneda());
+                credito.put("numeroSolicitud", pCredito.getNumeroSolicitud());
+                credito.put("fechaSolicitud", pCredito.getBaseFechaSolicitud());
+                if(pCredito.getTipo().equals("Hipotecario de terreno")) {
+                    AdquisicionTerreno creditoT = (AdquisicionTerreno) realizar.buscarCredito(pSolicitante, pCredito.getNumeroSolicitud());
+                    credito.put("avaluo", creditoT.getAvaluo());
+                }
+                else if(pCredito.getTipo().equals("Hipotecario de vivienda")) {
+                    ConstruccionVivienda creditoT = (ConstruccionVivienda) realizar.buscarCredito(pSolicitante, pCredito.getNumeroSolicitud());
+                    credito.put("avaluo", creditoT.getAvaluo());
+                    credito.put("montoBono", creditoT.getMontoBono());
+                    credito.put("bono", creditoT.getBono());
+                }
+                else if(pCredito.getTipo().equals("Fiduciario")) {
+                    JSONArray listaFiadores = new JSONArray();
+                    CreditoFiduciario creditoT = (CreditoFiduciario) realizar.buscarCredito(pSolicitante, pCredito.getNumeroSolicitud());
+                    for(Fiador fiadorT:creditoT.fiadores) {
+                        JSONObject fiador = new JSONObject();
+                        fiador.put("nombre", fiadorT.getNombre());
+                        fiador.put("cedula", fiadorT.getCedula());
+                        fiador.put("salarioBruto", fiadorT.getSalarioBrutoMensual());
+                        fiador.put("salarioLiquido", fiadorT.getSalarioLiquidoMensual());
+                        listaFiadores.add(fiador);
+                    }
+                    credito.put("fiadores", listaFiadores);
+                }
+                else if(pCredito.getTipo().equals("Prendiario")) {
+                    CreditoPrendiario creditoT = (CreditoPrendiario) realizar.buscarCredito(pSolicitante, pCredito.getNumeroSolicitud());
+                    JSONObject prenda = new JSONObject();
+                    prenda.put("monto", creditoT.prenda.getDescripccion());
+                    prenda.put("descripccion", creditoT.prenda.getDescripccion());
+                    credito.put("prenda", prenda);
+                }
+                else if(pCredito.getTipo().equals("Personal")) {
+                    // Presenta los mismo atributos que la clase madre
+                }
+                listaCreditos.add(credito);
+            }
+            solicitante.put("creditos", listaCreditos);
+            
+            listaSolicitante.add(solicitante);
         }
-        solicitante.put("creditos", listaCreditos);
-        try(FileWriter file = new FileWriter("DATA\\"+pSolicitante.getCedula()+".txt")){
-            file.write(solicitante.toJSONString());
+        try(FileWriter file = new FileWriter("DATA\\"+"solicitantes.txt")){
+            file.write(listaSolicitante.toJSONString());
             file.flush();
         } catch(IOException e){
             e.printStackTrace();
