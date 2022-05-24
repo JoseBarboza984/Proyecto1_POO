@@ -3,13 +3,11 @@ package vistausuario;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.FileOutputStream;
+
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.text.Document;
+
 import logicadenegocios.*;
 import util.*;
 import excepciones.*;
@@ -23,11 +21,13 @@ import excepciones.*;
 public class Menu extends javax.swing.JFrame {
     public static ArrayList<Solicitante> solicitantes;
     //funciones realizar = new funciones();
+    Json almacenamiento;
 
     /**
      * Creates new form Proyecto1
      */
     public Menu() {
+        this.almacenamiento = new Json();
         //solicitantes = new ArrayList<>();
         Solicitante solicitanteBase = new Solicitante("Jose", "Daniel", "Barboza", "Campos", 702870837, 87175835, "jd.2001.bc@gmail.com",  300000.0, 950000.0, "Limon", "Poccoci", "Guapiles", "Centro");
         solicitantes.add(solicitanteBase);
@@ -390,6 +390,7 @@ public class Menu extends javax.swing.JFrame {
                 Solicitante solicitante = new Solicitante(nombre, Snombre, apellido, Sapellido, cedula, telefono, correo, salarioBruto, salarioLiquido, provincia, canton, distrito, sennas);
                 funciones fun = new funciones();
                 fun.registrarSolicitante(solicitante);
+                almacenamiento.guardar(solicitantes);
                 JOptionPane.showMessageDialog(this, "Se registro el solicitante con exito");
             } catch(SolicitanteAlreadyExistException e) {
                 System.err.println(e.getMessage());
