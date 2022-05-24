@@ -10,12 +10,13 @@ import javax.swing.table.DefaultTableModel;
 import logicadenegocios.Credito;
 import logicadenegocios.CreditoFiduciario;
 import logicadenegocios.Fiador;
+import util.Json;
 import util.funciones;
+import static vistausuario.Menu.solicitantes;
 import static vistausuario.VistaCredito.moneda;
 import static vistausuario.VistaCredito.monto;
 import static vistausuario.VistaCredito.plazo;
-import static vistausuario.VistaCredito.solicitante;
-import static vistausuario.VistaCredito.tipo;
+
 
 /**
  *
@@ -34,11 +35,13 @@ public class VistaFiador extends javax.swing.JFrame {
     public boolean validar = false;
     funciones realizar;
     VistaCredito info;
+    Json almacenamiento;
 
     /**
      * Creates new form Creditos
      */
     public VistaFiador() {
+        this.almacenamiento = new Json();
         this.realizar = new funciones();
         this.info = new VistaCredito();
         initComponents();
@@ -231,6 +234,7 @@ public class VistaFiador extends javax.swing.JFrame {
                 DefaultTableModel tblModel = (DefaultTableModel) info.jTable1.getModel();
                 tblModel.addRow(row);
             }
+            almacenamiento.guardar(solicitantes);
             info.setVisible(true);
             this.dispose();
             
