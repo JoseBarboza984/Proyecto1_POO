@@ -6,6 +6,16 @@ package vistausuario;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import logicadenegocios.Credito;
+import logicadenegocios.CreditoFiduciario;
+import logicadenegocios.Fiador;
+import util.funciones;
+import static vistausuario.VistaCredito.moneda;
+import static vistausuario.VistaCredito.monto;
+import static vistausuario.VistaCredito.plazo;
+import static vistausuario.VistaCredito.solicitante;
+import static vistausuario.VistaCredito.tipo;
 
 /**
  *
@@ -21,11 +31,16 @@ public class VistaFiador extends javax.swing.JFrame {
     public double salarioBruto2;
     public double salarioLiquido2;
     public int cantidad = 1;
+    public boolean validar = false;
+    funciones realizar;
+    VistaCredito info;
 
     /**
      * Creates new form Creditos
      */
     public VistaFiador() {
+        this.realizar = new funciones();
+        this.info = new VistaCredito();
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -186,8 +201,39 @@ public class VistaFiador extends javax.swing.JFrame {
                 salarioLiquido2 = Double.valueOf(SalarioLiquido2.getText()); 
                 cantidad = 2;
             }
-        
+            Fiador fiador;
+            int cantFiadores = cantidad;
+            String nombref = nombre;
+            int cedulaf = cedula;
+            double brutof = salarioBruto;
+            double liquidof = salarioLiquido;
+            fiador = new Fiador(nombref, cedulaf, brutof, liquidof);
+            Fiador fiadores[];
+            if(cantFiadores == 2) {
+                fiadores= new Fiador[2];
+                fiadores[0] = fiador;
+                String nombref2 = nombre2;
+                int cedulaf2 = cedula2;
+                double brutof2 = salarioBruto2;
+                double liquidof2 = salarioLiquido2;
+                fiador = new Fiador(nombref2, cedulaf2, brutof2, liquidof2);
+                fiadores[1] = fiador;
+            } else {
+                fiadores= new Fiador[1];
+                fiadores[0] = fiador;
+            }
+            CreditoFiduciario credito = new CreditoFiduciario(info.tipo, monto, plazo, moneda);
+            credito.setEstado(credito.verificarFiadores(fiadores, monto, credito.getCuota()));
+            realizar.registrarCreditoFiduciario(info.solicitante, credito);
+            Credito credito2 = realizar.buscarCredito(info.solicitante, credito.getNumeroSolicitud());
+            Object[][] matriz = credito2.calcularTablaAmortizacion(monto, plazo, credito2.getTasaInteres());
+            for(Object[] row:matriz) {
+                DefaultTableModel tblModel = (DefaultTableModel) info.jTable1.getModel();
+                tblModel.addRow(row);
+            }
+            info.setVisible(true);
             this.dispose();
+            
         }
     }//GEN-LAST:event_RegistrarActionPerformed
 
@@ -277,15 +323,12 @@ public class VistaFiador extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaFiador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaFiador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaFiador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VistaFiador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
 
