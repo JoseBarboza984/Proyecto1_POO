@@ -106,6 +106,14 @@ public abstract class Credito {
         return moneda;
     }
     
+    public double getMonto() {
+        return monto;
+    }
+    
+    public int getPlazo() {
+        return plazo;
+    }
+    
     /**
      *  Metodo para establecer la información en una Cadena de caracteres
      * 
