@@ -167,12 +167,15 @@ public class CreditoPrendiario extends Credito {
         Object[] array =  new Object[5];
         array[0] = k;
         double interes = pTasaInteres * pMonto;
+        interes = Math.round(interes * 100.0) / 100.0;
         array[2] = interes;
         double amortizacion = 0;
         if(k == pPlazoAnios)
             amortizacion = pMonto;
+        amortizacion  = Math.round(amortizacion * 100.0) / 100.0;  
         array[3] = amortizacion;
         double mCuota = interes + amortizacion;
+        mCuota = Math.round(mCuota * 100.0) / 100.0;
         array[1] = mCuota;
         array[4] = pMonto - pAmortizacionAnterior;
         return array;
@@ -187,7 +190,7 @@ public class CreditoPrendiario extends Credito {
      */
     public Object[] calcularTotales(Object[][] pMatriz, int pPlazoAnios) {
         Object[] array = new Object[5];
-        array[0] = "Totales'";
+        array[0] = "Totales";
         array[1] = "";
         double interes = 0;
         double amortizacion = 0;
@@ -195,6 +198,8 @@ public class CreditoPrendiario extends Credito {
             interes = interes + Double.valueOf(String.valueOf(pMatriz[i][2]));
             amortizacion = amortizacion + Double.valueOf(String.valueOf(pMatriz[i][3]));
         }
+        interes = Math.round(interes * 100.0) / 100.0;
+        amortizacion = Math.round(amortizacion * 100.0) / 100.0;
         array[2] = interes;
         array[3] = amortizacion;
         array[4] = 0;
