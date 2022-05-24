@@ -25,7 +25,7 @@ public class VistaPDF extends javax.swing.JFrame {
      */
     public VistaPDF() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
         TextPrompt play = new TextPrompt("Cédula",Cedula);
         TextPrompt play1 = new TextPrompt("Número de Solicitud",NumeroSolicitud);
     }
