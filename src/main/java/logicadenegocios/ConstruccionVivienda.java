@@ -71,6 +71,18 @@ public class ConstruccionVivienda extends Credito{
         return avaluo+super.gastosFormalizacion+super.honorariosLegales+Monto;
     }
     
+    public double getAvaluo() {
+        return avaluo;
+    }
+    
+    public double getMontoBono() {
+        return montoBono;
+    }
+    
+    public boolean getBono() {
+        return bono;
+    }
+    
     /**
      *  Establece el atributo estado
      * @param pEstado   Variable que contiene si se debe aceptar o no el credito
