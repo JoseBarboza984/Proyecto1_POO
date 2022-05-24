@@ -6,6 +6,7 @@ package vistausuario;
 
 import excepciones.SolicitanteDoesNotExistException;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -134,6 +135,11 @@ public class VistaCredito extends javax.swing.JFrame {
                 BotonColonesActionPerformed(evt);
             }
         });
+        BotonColones.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                BotonColonesKeyTyped(evt);
+            }
+        });
         jPanel1.add(BotonColones, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 300, 200, 30));
 
         BotonDolares.setBackground(new java.awt.Color(51, 51, 51));
@@ -249,8 +255,7 @@ public class VistaCredito extends javax.swing.JFrame {
         char caracter = evt.getKeyChar();
         if (((caracter < '0' || caracter > '9'))
                 &&(caracter != KeyEvent.VK_BACK_SPACE)
-                &&(caracter != '.' || Monto.getText().contains("."))
-                 &&(caracter != ',' || Monto.getText().contains(","))){
+                &&(caracter != '.' || Monto.getText().contains("."))){
             evt.consume();
             JOptionPane.showMessageDialog(rootPane, "Ingresar solamente números");
         }
@@ -282,10 +287,79 @@ public class VistaCredito extends javax.swing.JFrame {
                         tblModel.addRow(row);
                     }
                 }
+                else if(TipoCredito.getSelectedItem().equals("Hipotecario de vivienda")) {
+                    tipo = "Hipotecario de vivienda";
+                    double TBP = obtenerTasa.getTBP();
+                    double TED = obtenerTasa.getTED();
+                    boolean bono = true;        //Realizar ventana
+                    double ingreso = 1650000;
+                    ConstruccionVivienda credito = new ConstruccionVivienda(tipo, monto, plazo, moneda, TBP, TED, bono, ingreso);
+                    realizar.registrarCreditoVivienda(solicitante, credito);
+                    Credito credito2 = realizar.buscarCredito(solicitante, credito.getNumeroSolicitud());
+                    Object[][] matriz = credito2.calcularTablaAmortizacion(monto, plazo, credito2.getTasaInteres());
+                    for(Object[] row:matriz) {
+                        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+                        tblModel.addRow(row);
+                    }
+                }
+                else if (TipoCredito.getSelectedItem().equals("Fiduciario")) {      ///
+                    tipo = "Fiduciario";
+                    
+                    VistaFiador newframe = new VistaFiador();
+        
+                    newframe.setVisible(true);
+                    
+                    Fiador fiador;
+                    int cantFiadores = newframe.cantidad;
+                    String nombref = newframe.nombre;
+                    int cedulaf = newframe.cedula;
+                    double brutof = newframe.salarioBruto;
+                    double liquidof = newframe.salarioLiquido;
+                    fiador = new Fiador(nombref, cedulaf, brutof, liquidof);
+                    Fiador fiadores[];
+                    if(cantFiadores == 2) {
+                        fiadores= new Fiador[2];
+                        fiadores[0] = fiador;
+                        String nombref2 = newframe.nombre2;
+                        int cedulaf2 = newframe.cedula2;
+                        double brutof2 = newframe.salarioBruto2;
+                        double liquidof2 = newframe.salarioLiquido2;
+                        fiador = new Fiador(nombref2, cedulaf2, brutof2, liquidof2);
+                        fiadores[1] = fiador;
+                    } else {
+                        
+                        fiadores= new Fiador[1];
+                        fiadores[0] = fiador;
+                    }
+                    CreditoFiduciario credito = new CreditoFiduciario(tipo, monto, plazo, moneda);
+                    credito.setEstado(credito.verificarFiadores(fiadores, monto, credito.getCuota()));
+                    realizar.registrarCreditoFiduciario(solicitante, credito);
+                    Credito credito2 = realizar.buscarCredito(solicitante, credito.getNumeroSolicitud());
+                    Object[][] matriz = credito2.calcularTablaAmortizacion(monto, plazo, credito2.getTasaInteres());
+                    for(Object[] row:matriz) {
+                        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+                        tblModel.addRow(row);
+                    }
+                }
                 else if (TipoCredito.getSelectedItem().equals("Personal")) {
                     tipo = "Personal";
                     CreditoPersonal credito = new CreditoPersonal(tipo, monto, plazo, moneda);
+                    credito.setEstado(credito.verificarSolicitante(solicitante.getSalarioLiquido()));
                     realizar.registrarCreditoPersonal(solicitante, credito);
+                    Credito credito2 = realizar.buscarCredito(solicitante, credito.getNumeroSolicitud());
+                    Object[][] matriz = credito2.calcularTablaAmortizacion(monto, plazo, credito2.getTasaInteres());
+                    for(Object[] row:matriz) {
+                        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+                        tblModel.addRow(row);
+                    }
+                }
+                else if (TipoCredito.getSelectedItem().equals("Prendiario")) {      ///
+                    tipo = "prendario";
+                    CreditoPrendiario credito = new CreditoPrendiario(tipo, monto, plazo, moneda);
+                    String descripccionP = "";
+                    double montoP = 0;
+                    credito.setEstado(credito.setPrenda(descripccionP, montoP));
+                    realizar.registrarCreditoPrendiario(solicitante, credito);
                     Credito credito2 = realizar.buscarCredito(solicitante, credito.getNumeroSolicitud());
                     Object[][] matriz = credito2.calcularTablaAmortizacion(monto, plazo, credito2.getTasaInteres());
                     for(Object[] row:matriz) {
@@ -341,6 +415,10 @@ public class VistaCredito extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Ingresar solamente números");
         }
     }//GEN-LAST:event_PlazosKeyTyped
+
+    private void BotonColonesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BotonColonesKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotonColonesKeyTyped
 
     /**
      * @param args the command line arguments
