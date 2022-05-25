@@ -50,6 +50,7 @@ public class AdquisicionTerreno extends Credito{
      * @param pAvaluo                          Monto de avaluo
      * @param pNumeroSolicitud          Identificador del credito
      * @param pFechaSolicitud             Fecha de solicitud
+     * @throws java.text.ParseException
      */
     public AdquisicionTerreno(String pTipo, double pMonto, int pPlazo, String pMoneda, double pAvaluo, String pNumeroSolicitud, String pFechaSolicitud) throws ParseException {
         super(pTipo, pMonto, pPlazo, pMoneda, pNumeroSolicitud, pFechaSolicitud);
@@ -184,13 +185,13 @@ public class AdquisicionTerreno extends Credito{
         Object[] array =  new Object[5];
         array[0] = k;
         double montoCuota = (pMonto * pTasaInteres)/(1- (double) Math.pow((1.0+pTasaInteres), -pPlazoAnios));
-        montoCuota = Math.round(montoCuota * 100.0) / 100.0;            //Integrar
+        montoCuota = Math.round(montoCuota * 100.0) / 100.0;          
         array[1] = FormatoDecimal.formatoDecimal(montoCuota);
         double interes = montoCuota*(1-(1/Math.pow(1+pTasaInteres,pPlazoAnios+1-k)));
-        interes = Math.round(interes * 100.0) / 100.0;                              //Integrar
+        interes = Math.round(interes * 100.0) / 100.0;                              
         array[2] = FormatoDecimal.formatoDecimal(interes);
         double amortizacion = montoCuota/Math.pow(1+pTasaInteres, pPlazoAnios+1-k);
-        amortizacion  = Math.round(amortizacion * 100.0) / 100.0;           //Integrar
+        amortizacion  = Math.round(amortizacion * 100.0) / 100.0;          
         array[3] = FormatoDecimal.formatoDecimal(amortizacion);
         array[4] = FormatoDecimal.formatoDecimal(Math.round((pMontoAnterior- pAmortizacionAnterior)* 100.0) / 100.0);
         return array;

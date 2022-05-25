@@ -48,6 +48,8 @@ public class CreditoFiduciario extends Credito {
         return super.monto+super.gastosFormalizacion;
     }
     
+    
+    //Medotos Accesores
     public double getCuota() {
         return super.cuota;
     }
@@ -90,6 +92,7 @@ public class CreditoFiduciario extends Credito {
      *  Establece el atributo estado
      * @param pEstado   Variable que contiene si se debe aceptar o no el credito
      */
+    @Override
     public void setEstado(boolean pEstado) {
         if(pEstado)
             estado = "Aceptado";
@@ -106,6 +109,7 @@ public class CreditoFiduciario extends Credito {
      * @param pTasaInteres                        Tasa de interes que se aplica en el credito
      * @param k                                          Numero de cuota o fila
      * @param pAmortizacionAnterior         Valor de la amortización en la cuota anterior
+     * @param pMontoAnterior                    Monto de la deuda anterior
      * @return      Array de objetos que contiene los datos {Numero de cuota, Monto de cuota, Interes, Amortización, Deuda}
      */
     public Object[] calcularCuotaSF(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior, double pMontoAnterior) {

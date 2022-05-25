@@ -46,7 +46,7 @@ public class ConstruccionVivienda extends Credito{
             }
         }
         
-        else if(pMoneda == "Dolares"){
+        else if("Dolares".equals(pMoneda)){
             super.tasaInteres = pTED+0.015;
             if(bono = true) {
                 montoBono = calcularMontoBonoDolares(pIngresoFamiliar);
@@ -73,14 +73,13 @@ public class ConstruccionVivienda extends Credito{
         return avaluo+super.gastosFormalizacion+super.honorariosLegales+Monto;
     }
     
+    //Metodos Accesores
     public double getAvaluo() {
         return avaluo;
     }
-    
     public double getMontoBono() {
         return montoBono;
     }
-    
     public boolean getBono() {
         return bono;
     }
@@ -119,7 +118,7 @@ public class ConstruccionVivienda extends Credito{
      */
     private double calcularHonorariosColones(double pMontoInicial) {
         double resultado;
-        double residuo = 0;
+        double residuo;
         
         if (pMontoInicial <= 11000000){
             resultado = pMontoInicial*0.02;
@@ -280,6 +279,7 @@ public class ConstruccionVivienda extends Credito{
      * @param pTasaInteres                        Tasa de interes que se aplica en el credito
      * @param k                                          Numero de cuota o fila
      * @param pAmortizacionAnterior         Valor de la amortización en la cuota anterior
+     * @param pMontoAnterior                    Monto de la deuda anterior
      * @return      Array de objetos que contiene los datos {Numero de cuota, Monto de cuota, Interes, Amortización, Deuda}
      */
     public Object[] calcularCuotaSF(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior, double pMontoAnterior) {

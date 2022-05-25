@@ -72,6 +72,7 @@ public class CreditoPersonal extends Credito{
      * @param k                                          Numero de cuota o fila
      * @param pAmortizacionAnterior         Valor de la amortización en la cuota anterior
      * @param pCuotaAnterior                    Valor del monto de la cuota anterior
+     * @param pMontoAnterior                    Monto de la deuda anterior
      * @return      Array de objetos que contiene los datos {Numero de cuota, Monto de cuota, Interes, Amortización, Deuda}
      */
     public Object[] calcularCuotaSAl(double pMonto, int pPlazoAnios, double pTasaInteres, int k, double pAmortizacionAnterior, double pCuotaAnterior, double pMontoAnterior) {

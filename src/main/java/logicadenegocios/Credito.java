@@ -53,10 +53,13 @@ public abstract class Credito {
     /**
      *  Metodo constructor del credito
      * 
-     * @param pTipo         Tipo de credito
-     * @param pMonto      Monto inicial solicitado en el credito
-     * @param pPlazo        Cantidad de años plazo del credito
-     * @param pMoneda    Tipo de moneda en la que se pide el credito
+     * @param pTipo                                   Tipo de credito
+     * @param pMonto                                Monto inicial solicitado en el credito
+     * @param pPlazo                                  Cantidad de años plazo del credito
+     * @param pMoneda                              Tipo de moneda en la que se pide el credito
+     * @param pNumeroSolicitud                Identificador del credito
+     * @param pFechaSolicitud                    Fecha de la solicitud del credito
+     * @throws java.text.ParseException
      */
     public Credito(String pTipo, double pMonto, int pPlazo, String pMoneda, String pNumeroSolicitud, String pFechaSolicitud) throws ParseException {
         tipo = pTipo;
@@ -116,30 +119,25 @@ public abstract class Credito {
         return formato.format(fechaSolicitud);
     }
     
+    //Metodos Accesores
     public String getNumeroSolicitud() {
         return numeroSolicitud;
     }
-    
     public double getTasaInteres() {
         return tasaInteres;
     }
-    
     public String getMoneda() {
         return moneda;
     }
-    
     public double getMonto() {
         return monto;
     }
-    
     public int getPlazo() {
         return plazo;
     }
-    
     public String getTipo() {
         return tipo;
     }
-    
     public String getBaseFechaSolicitud() {
         return String.valueOf(fechaSolicitud);
     }
