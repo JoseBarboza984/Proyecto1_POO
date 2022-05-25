@@ -172,10 +172,12 @@ public class VistaFiador extends javax.swing.JFrame {
         jPanel3.add(SalarioBruto, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 200, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Fiador 2:");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, 70, 20));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Fiador 1:");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 70, 20));
 
