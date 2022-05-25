@@ -38,6 +38,7 @@ public class AdquisicionTerreno extends Credito{
             super.tasaInteres = pTED+0.015;
             super.honorariosLegales = calcularHonorariosDolares(pMonto);
         }
+        this.setEstado(true);
     }
     
     /**
