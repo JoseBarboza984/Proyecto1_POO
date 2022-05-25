@@ -238,18 +238,11 @@ public class VistaCredito extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonColonesActionPerformed
 
     private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
-        // TODO add your handling code here:
-        
-        //Menu newframe = new Menu();
-        
-        //newframe.setVisible(true);
-        
+
         this.dispose();
     }//GEN-LAST:event_RegresarActionPerformed
 
     private void CedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CedulaKeyTyped
-        // TODO add your handling code here:
-        
         char validar=evt.getKeyChar();
         
         if(Character.isLetter(validar)){
@@ -271,7 +264,6 @@ public class VistaCredito extends javax.swing.JFrame {
     }//GEN-LAST:event_MontoKeyTyped
 
     private void GenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerarActionPerformed
-        // TODO add your handling code here:
 
         if(Monto.getText().equals("") || Cedula.getText().equals("") || tipoMoneda.equals("")) {
             JOptionPane.showMessageDialog(this, "Favor ingresar todos los datos requeridos");
@@ -305,17 +297,6 @@ public class VistaCredito extends javax.swing.JFrame {
         
                     newframe.setVisible(true);
                     this.dispose();
-                    
-                    /**boolean bono = newframe.bono;
-                    double ingreso = 1650000;
-                    ConstruccionVivienda credito = new ConstruccionVivienda(tipo, monto, plazo, moneda, TBP, TED, bono, ingreso);
-                    realizar.registrarCreditoVivienda(solicitante, credito);
-                    Credito credito2 = realizar.buscarCredito(solicitante, credito.getNumeroSolicitud());
-                    Object[][] matriz = credito2.calcularTablaAmortizacion(monto, plazo, credito2.getTasaInteres());
-                    for(Object[] row:matriz) {
-                        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
-                        tblModel.addRow(row);
-                    }*/
                 }
                 else if (TipoCredito.getSelectedItem().equals("Fiduciario")) {      ///
                     tipo = "Fiduciario";
@@ -324,38 +305,6 @@ public class VistaCredito extends javax.swing.JFrame {
         
                     newframe.setVisible(true);
                     this.dispose();
-                    /**
-                    Fiador fiador;
-                    int cantFiadores = newframe.cantidad;
-                    String nombref = newframe.nombre;
-                    int cedulaf = newframe.cedula;
-                    double brutof = newframe.salarioBruto;
-                    double liquidof = newframe.salarioLiquido;
-                    fiador = new Fiador(nombref, cedulaf, brutof, liquidof);
-                    Fiador fiadores[];
-                    if(cantFiadores == 2) {
-                        fiadores= new Fiador[2];
-                        fiadores[0] = fiador;
-                        String nombref2 = newframe.nombre2;
-                        int cedulaf2 = newframe.cedula2;
-                        double brutof2 = newframe.salarioBruto2;
-                        double liquidof2 = newframe.salarioLiquido2;
-                        fiador = new Fiador(nombref2, cedulaf2, brutof2, liquidof2);
-                        fiadores[1] = fiador;
-                    } else {
-
-                        fiadores= new Fiador[1];
-                        fiadores[0] = fiador;
-                    }
-                    CreditoFiduciario credito = new CreditoFiduciario(tipo, monto, plazo, moneda);
-                    credito.setEstado(credito.verificarFiadores(fiadores, monto, credito.getCuota()));
-                    realizar.registrarCreditoFiduciario(solicitante, credito);
-                    Credito credito2 = realizar.buscarCredito(solicitante, credito.getNumeroSolicitud());
-                    Object[][] matriz = credito2.calcularTablaAmortizacion(monto, plazo, credito2.getTasaInteres());
-                    for(Object[] row:matriz) {
-                        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
-                        tblModel.addRow(row);
-                    }*/
                 }
                 else if (TipoCredito.getSelectedItem().equals("Personal")) {
                     tipo = "Personal";
@@ -379,19 +328,6 @@ public class VistaCredito extends javax.swing.JFrame {
         
                     newframe.setVisible(true);
                     this.dispose();
-                    
-                    /**
-                    CreditoPrendiario credito = new CreditoPrendiario(tipo, monto, plazo, moneda);
-                    String descripccionP = newframe.descripccion;
-                    double montoP = newframe.valor;
-                    credito.setEstado(credito.setPrenda(descripccionP, montoP));
-                    realizar.registrarCreditoPrendiario(solicitante, credito);
-                    Credito credito2 = realizar.buscarCredito(solicitante, credito.getNumeroSolicitud());
-                    Object[][] matriz = credito2.calcularTablaAmortizacion(monto, plazo, credito2.getTasaInteres());
-                    for(Object[] row:matriz) {
-                        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
-                        tblModel.addRow(row);
-                    }*/
                 }
             } catch (SolicitanteDoesNotExistException ex) {
                 System.err.println(ex.getMessage());
