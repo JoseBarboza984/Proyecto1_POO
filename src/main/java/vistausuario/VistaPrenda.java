@@ -28,7 +28,6 @@ public class VistaPrenda extends javax.swing.JFrame {
     public double valor;
     funciones realizar;
     VistaCredito info;
-    Json almacenamiento = new Json();
 
     /**
      * Creates new form Creditos
@@ -132,7 +131,8 @@ public class VistaPrenda extends javax.swing.JFrame {
                 DefaultTableModel tblModel = (DefaultTableModel) info.jTable1.getModel();
                 tblModel.addRow(row);
             }
-            almacenamiento.guardar(solicitantes);
+            Json almacenar = new Json();
+            almacenar.guardar(solicitantes);
             info.setVisible(true);
             this.dispose();
         }
