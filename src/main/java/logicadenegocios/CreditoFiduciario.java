@@ -7,6 +7,7 @@ package logicadenegocios;
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Arrays;
+import util.FormatoDecimal;
 
 /**
  *  Clase hija de Credito, representa el credito fiduciario
@@ -112,14 +113,14 @@ public class CreditoFiduciario extends Credito {
         array[0] = k;
         double montoCuota = (pMonto * pTasaInteres)/(1- (double) Math.pow((1.0+pTasaInteres), -pPlazoAnios)); //Parentesis
         montoCuota = Math.round(montoCuota * 100.0) / 100.0;            //Integrar
-        array[1] = montoCuota;
+        array[1] = FormatoDecimal.formatoDecimal(montoCuota);
         double interes = montoCuota*(1-(1/Math.pow(1+pTasaInteres,pPlazoAnios+1-k)));
         interes = Math.round(interes * 100.0) / 100.0;                              //Integrar
-        array[2] = interes;
+        array[2] = FormatoDecimal.formatoDecimal(interes);
         double amortizacion = montoCuota/Math.pow(1+pTasaInteres, pPlazoAnios+1-k);
         amortizacion  = Math.round(amortizacion * 100.0) / 100.0;           //Integrar
-        array[3] = amortizacion;
-        array[4] = Math.round((pMontoAnterior- pAmortizacionAnterior)* 100.0) / 100.0;  //Cambiar al monto anterior
+        array[3] = FormatoDecimal.formatoDecimal(amortizacion);
+        array[4] = FormatoDecimal.formatoDecimal(Math.round((pMontoAnterior- pAmortizacionAnterior)* 100.0) / 100.0);  //Cambiar al monto anterior
         return array;
     }
     
@@ -143,8 +144,8 @@ public class CreditoFiduciario extends Credito {
         }
         interes = Math.round(interes * 100.0) / 100.0;
         amortizacion = Math.round(amortizacion * 100.0) / 100.0;
-        array[2] = interes;
-        array[3] = amortizacion;
+        array[2] = FormatoDecimal.formatoDecimal(interes);
+        array[3] = FormatoDecimal.formatoDecimal(amortizacion);
         array[4] = 0;
         return array;
     }
@@ -159,17 +160,29 @@ public class CreditoFiduciario extends Credito {
      */
     @Override                                                       //      V                           n                               i
     public Object[][] calcularTablaAmortizacion(double pMonto, int pPlazoAnios, double pTasaInteres) {
-        Object[][] resultados = new Object[pPlazoAnios+1][5];
+        Object[][] resultados = new Object[pPlazoAnios+3][5];
         double amortizacion = 0;
         double monto = this.getMontoFinal();
         int largo = 0;
         for(int i = 0; i < pPlazoAnios; i++) {
             resultados[i] = calcularCuotaSF(this.getMontoFinal(), pPlazoAnios, pTasaInteres, i+1, amortizacion, monto);
-            monto = (double) resultados [i][4];
-            amortizacion = (double) resultados [i][3];
+            monto = Double.valueOf(String.valueOf(resultados [i][4]));
+            amortizacion = Double.valueOf(String.valueOf(resultados [i][3]));
             largo++;
         }
         resultados[largo] = calcularTotales(resultados, pPlazoAnios);
+        resultados[largo] = calcularTotales(resultados, pPlazoAnios);
+        resultados[largo+2][0] = ""; 
+        resultados[largo+2][1] = "";
+        resultados[largo+2][2] = "";
+        resultados[largo+2][3] = "";
+        resultados[largo+2][4] = "";
+        
+        resultados[largo+2][0] = "Codigo: "; 
+        resultados[largo+2][1] = super.getNumeroSolicitud();
+        resultados[largo+2][2] = "";
+        resultados[largo+2][3] = "Estado: ";
+        resultados[largo+2][4] = super.estado;
         return resultados;
     }
     
