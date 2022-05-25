@@ -125,9 +125,9 @@ public class VistaPDF extends javax.swing.JFrame {
     private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
         // TODO add your handling code here:
         
-        Menu newframe = new Menu();
+        //Menu newframe = new Menu();
         
-        newframe.setVisible(true);
+        //newframe.setVisible(true);
         
         this.dispose();
     }//GEN-LAST:event_RegresarActionPerformed
