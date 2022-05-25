@@ -22,13 +22,11 @@ public class VistaBono extends javax.swing.JFrame {
     public boolean bono;
     funciones realizar;
     VistaCredito info;
-    Json almacenamiento;
 
     /**
      * Creates new form Creditos
      */
     public VistaBono() {
-        this.almacenamiento = new Json();
         this.realizar = new funciones();
         this.info = new VistaCredito();
         initComponents();
@@ -165,7 +163,8 @@ public class VistaBono extends javax.swing.JFrame {
                 DefaultTableModel tblModel = (DefaultTableModel) info.jTable1.getModel();
                 tblModel.addRow(row);
             }
-            almacenamiento.guardar(solicitantes);
+            Json almacenar = new Json();
+            almacenar.guardar(solicitantes);
             info.setVisible(true);
             this.dispose();
         }
