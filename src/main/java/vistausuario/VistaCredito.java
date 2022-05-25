@@ -6,9 +6,7 @@ package vistausuario;
 
 import excepciones.SolicitanteDoesNotExistException;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import util.*;
@@ -33,14 +31,12 @@ public class VistaCredito extends javax.swing.JFrame {
     public static double TED;
     obtenervalores obtenerTasa = new obtenervalores();
     funciones realizar = new funciones();
-    Json almacenamiento;
     
 
     /**
      * Creates new form CreditoHipotecario
      */
     public VistaCredito() {
-        this.almacenamiento = new Json();
         TBP = obtenerTasa.getTBP();
         TED = obtenerTasa.getTED();
         initComponents();
@@ -298,7 +294,9 @@ public class VistaCredito extends javax.swing.JFrame {
                         DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
                         tblModel.addRow(row);
                     }
-                    almacenamiento.guardar(solicitantes);
+                    Json almacenar = new Json();
+                    almacenar.guardar(solicitantes);
+                    this.setVisible(true);
                 }
                 else if(TipoCredito.getSelectedItem().equals("Hipotecario de vivienda")) {
                     tipo = "Hipotecario de vivienda";
@@ -370,7 +368,9 @@ public class VistaCredito extends javax.swing.JFrame {
                         DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
                         tblModel.addRow(row);
                     }
-                    almacenamiento.guardar(solicitantes);
+                    Json almacenar = new Json();
+                    almacenar.guardar(solicitantes);
+                    this.setVisible(true);
                 }
                 else if (TipoCredito.getSelectedItem().equals("Prendiario")) {      ///
                     tipo = "prendario";
@@ -400,40 +400,6 @@ public class VistaCredito extends javax.swing.JFrame {
     
     }//GEN-LAST:event_GenerarActionPerformed
 
-    public void seguirFiduciario(VistaFiador newframe, Solicitante solicitante, String tipo, double monto, int plazo, String moneda) {
-        Fiador fiador;
-                    int cantFiadores = newframe.cantidad;
-                    String nombref = newframe.nombre;
-                    int cedulaf = newframe.cedula;
-                    double brutof = newframe.salarioBruto;
-                    double liquidof = newframe.salarioLiquido;
-                    fiador = new Fiador(nombref, cedulaf, brutof, liquidof);
-                    Fiador fiadores[];
-                    if(cantFiadores == 2) {
-                        fiadores= new Fiador[2];
-                        fiadores[0] = fiador;
-                        String nombref2 = newframe.nombre2;
-                        int cedulaf2 = newframe.cedula2;
-                        double brutof2 = newframe.salarioBruto2;
-                        double liquidof2 = newframe.salarioLiquido2;
-                        fiador = new Fiador(nombref2, cedulaf2, brutof2, liquidof2);
-                        fiadores[1] = fiador;
-                    } else {
-                        
-                        fiadores= new Fiador[1];
-                        fiadores[0] = fiador;
-                    }
-                    CreditoFiduciario credito = new CreditoFiduciario(tipo, monto, plazo, moneda);
-                    credito.setEstado(credito.verificarFiadores(fiadores, monto, credito.getCuota()));
-                    realizar.registrarCreditoFiduciario(solicitante, credito);
-                    Credito credito2 = realizar.buscarCredito(solicitante, credito.getNumeroSolicitud());
-                    Object[][] matriz = credito2.calcularTablaAmortizacion(monto, plazo, credito2.getTasaInteres());
-                    for(Object[] row:matriz) {
-                        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
-                        tblModel.addRow(row);
-                    }
-    }
-    
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
         // TODO add your handling code here:
         
