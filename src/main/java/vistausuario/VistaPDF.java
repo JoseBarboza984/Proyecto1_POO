@@ -14,14 +14,14 @@ import logicadenegocios.*;
 
 /**
  *
- * @author Joshua
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class VistaPDF extends javax.swing.JFrame {
     funciones realizar = new funciones();
     boolean correo = false;
 
     /**
-     * Creates new form GenerarPDF
+     * Constructor de la vista de pdf
      */
     public VistaPDF() {
         initComponents();

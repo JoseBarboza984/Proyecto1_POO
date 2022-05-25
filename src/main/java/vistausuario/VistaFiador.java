@@ -20,7 +20,7 @@ import static vistausuario.VistaCredito.plazo;
 
 /**
  *
- * @author Joshua
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class VistaFiador extends javax.swing.JFrame {
     public String nombre;
@@ -37,7 +37,7 @@ public class VistaFiador extends javax.swing.JFrame {
     VistaCredito info;
 
     /**
-     * Creates new form Creditos
+     * Constructor de la vista fiador
      */
     public VistaFiador() {
         this.realizar = new funciones();

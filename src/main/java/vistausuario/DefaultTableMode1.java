@@ -6,16 +6,16 @@ package vistausuario;
 
 /**
  *
- * @author Joshua
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 class DefaultTableMode1 {
 
     void removeRow(int selectedRow) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     Object getDataVector() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
     
 }

@@ -16,7 +16,7 @@ import static vistausuario.VistaCredito.*;
 
 /**
  *
- * @author Joshua
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class VistaBono extends javax.swing.JFrame {
     public boolean bono;
@@ -24,7 +24,7 @@ public class VistaBono extends javax.swing.JFrame {
     VistaCredito info;
 
     /**
-     * Creates new form Creditos
+     * Constructor de la vista bono
      */
     public VistaBono() {
         this.realizar = new funciones();

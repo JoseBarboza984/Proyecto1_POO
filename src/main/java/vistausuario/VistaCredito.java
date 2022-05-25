@@ -16,7 +16,7 @@ import static vistausuario.Menu.solicitantes;
 
 /**
  *
- * @author Joshua
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class VistaCredito extends javax.swing.JFrame {
     public static DefaultTableModel modelo;
@@ -34,7 +34,7 @@ public class VistaCredito extends javax.swing.JFrame {
     
 
     /**
-     * Creates new form CreditoHipotecario
+     * Constructor de la vista credito
      */
     public VistaCredito() {
         TBP = obtenerTasa.getTBP();

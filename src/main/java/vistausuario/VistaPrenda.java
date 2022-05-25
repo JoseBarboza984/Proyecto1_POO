@@ -21,7 +21,7 @@ import static vistausuario.VistaCredito.tipo;
 
 /**
  *
- * @author Joshua
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class VistaPrenda extends javax.swing.JFrame {
     public String descripccion;
@@ -30,7 +30,7 @@ public class VistaPrenda extends javax.swing.JFrame {
     VistaCredito info;
 
     /**
-     * Creates new form Creditos
+     * Constructor de la vista de prenda
      */
     public VistaPrenda() {
         this.realizar = new funciones();

@@ -16,14 +16,14 @@ import excepciones.*;
 
 
 /**
- * @author Joshua
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class Menu extends javax.swing.JFrame {
     public static ArrayList<Solicitante> solicitantes;
     //funciones realizar = new funciones();
 
     /**
-     * Creates new form Proyecto1
+     * Constructor de la vista menu
      */
     public Menu() {
         solicitantes = new ArrayList<>();
