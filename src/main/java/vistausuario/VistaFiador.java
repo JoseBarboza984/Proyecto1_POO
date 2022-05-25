@@ -35,13 +35,11 @@ public class VistaFiador extends javax.swing.JFrame {
     public boolean validar = false;
     funciones realizar;
     VistaCredito info;
-    Json almacenamiento;
 
     /**
      * Creates new form Creditos
      */
     public VistaFiador() {
-        this.almacenamiento = new Json();
         this.realizar = new funciones();
         this.info = new VistaCredito();
         initComponents();
@@ -234,7 +232,8 @@ public class VistaFiador extends javax.swing.JFrame {
                 DefaultTableModel tblModel = (DefaultTableModel) info.jTable1.getModel();
                 tblModel.addRow(row);
             }
-            almacenamiento.guardar(solicitantes);
+            Json almacenar = new Json();
+            almacenar.guardar(solicitantes);
             info.setVisible(true);
             this.dispose();
             
