@@ -12,7 +12,7 @@ import java.net.URL;
 
 /**
  *
- * @author dirana
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class webservice {
      protected static String getHTML(String urlToRead) throws Exception {

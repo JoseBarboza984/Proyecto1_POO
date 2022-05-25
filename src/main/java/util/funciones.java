@@ -12,24 +12,22 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import logicadenegocios.*;
-import excepciones.*;
-
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import java.util.Properties;
+import java.util.Date;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -37,12 +35,16 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
+
 import javax.swing.JOptionPane;
+
+import logicadenegocios.*;
+import excepciones.*;
 import vistausuario.*;
 
 /**
  *
- * @author Jose
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class funciones {
     Menu menu;
@@ -50,33 +52,6 @@ public class funciones {
     public funciones() {
         this.menu = new Menu();
     }
-
-    /**
-    public static void actionRegistrarSolicitante() {
-        String nombre;
-        String sNombre;
-        String apellido;
-        String sApellido;
-        int cedula;
-        int telefono;
-        String correo;
-        double  salarioBruto;
-        double salarioLiquido;
-        String provincia;
-        String canton;
-        String distrito;
-        String sennas;
-        try{
-            Solicitante solicitante = new Solicitante(nombre, sNombre, apellido, sApellido, cedula, telefono, correo, salarioBruto, salarioLiquido, provincia, canton, distrito, sennas);
-            registrarSolicitante(solicitante);
-        } catch(SolicitanteAlreadyExistException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-    
-    public static void actionRegistrarCreditoTerreno() {
-        
-    }*/
     
     public void registrarSolicitante(Solicitante pSolicitante) throws SolicitanteAlreadyExistException {
         if(buscarSolicitanteSinExcepcion(pSolicitante.getCedula()) != null){
@@ -166,7 +141,7 @@ public class funciones {
         SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
         String nombrePDF = pSolicitante.getCedula()+"_"+formato.format(fecha);
         try {
-            FileOutputStream archivo = new FileOutputStream("PDF\\"+ nombrePDF + ".pdf");  //C:\\Users\\Jose\\Documents\\NetBeansProjects\\Proyecto1\\PDF
+            FileOutputStream archivo = new FileOutputStream("PDF\\"+ nombrePDF + ".pdf");  
             PdfWriter.getInstance(documento, archivo);
             documento.open(); 
             Paragraph parrafo = new Paragraph("Reporte de analisis de credito");

@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 
 /**
  *
- * @author Jose
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class FormatoDecimal {
     private static DecimalFormat decimalFormat = new DecimalFormat("#.00");

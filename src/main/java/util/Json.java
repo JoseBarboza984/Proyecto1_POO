@@ -21,7 +21,7 @@ import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author dirana
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class Json {
     funciones realizar = new funciones();
@@ -40,13 +40,8 @@ public class Json {
             }
   
         }catch(FileNotFoundException e){
-            e.printStackTrace();
         }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        catch(ParseException e){
-            e.printStackTrace();
+        catch(IOException | ParseException e){
         }
     }
 

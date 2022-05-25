@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  *
- * @author dirana
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class obtenervalores {
     private String fechaInicio;

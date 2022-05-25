@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author dirana
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class obtenerxml {
     private String xml;
