@@ -32,7 +32,7 @@ public class VistaBono extends javax.swing.JFrame {
         initComponents();
         
         this.setLocationRelativeTo(null);
-        TextPrompt ingresoTP = new TextPrompt("Ingreso familiar bruto",Ingreso);
+        TextPrompt ingresoTP = new TextPrompt("Ingresar salario familiar bruto",Ingreso);
         
     }
 
@@ -154,7 +154,10 @@ public class VistaBono extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "El monto solicitado es muy pequeño para aplicar a un bono");
                 bono = false;
             }
-            double ingreso = Double.valueOf(Ingreso.getText());
+            double ingreso = 0;
+            if(bono = false) {
+                ingreso = Double.valueOf(Ingreso.getText());
+            }
             ConstruccionVivienda credito = new ConstruccionVivienda(tipo, monto, plazo, moneda, TBP, TED, bono, ingreso);
             realizar.registrarCreditoVivienda(solicitante, credito);
             Credito credito2 = realizar.buscarCredito(solicitante, credito.getNumeroSolicitud());

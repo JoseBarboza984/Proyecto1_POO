@@ -5,6 +5,7 @@
 
 package util;
 
+
 import logicadenegocios.*;
 
 import java.io.FileWriter;
@@ -12,6 +13,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -26,23 +31,26 @@ import org.json.simple.parser.ParseException;
 public class Json {
     funciones realizar = new funciones();
 
-    public void leer() {
+    public static ArrayList<Solicitante> leer() {
         JSONParser jsonParser = new JSONParser();
         
-        try(FileReader reader = new FileReader("personas.json")){
+        ArrayList solicitantes = new ArrayList<Solicitante>();
+        
+        try(FileReader reader = new FileReader("DATA\\"+"solicitantes.txt")){
             Object obj = jsonParser.parse(reader);
             JSONArray personasList = (JSONArray) obj;
-            System.out.println("El archivo contiene: ");
-            System.out.println(personasList);
-            
-            for(Object persona: personasList){
-                mostrarInfo((JSONObject) persona);
+            for(Object persona:personasList){
+                Solicitante solicitante = cargarInfo((JSONObject) persona);
+                solicitantes.add(solicitante);
             }
-  
+            return solicitantes;
         }catch(FileNotFoundException e){
         }
         catch(IOException | ParseException e){
+        } catch (java.text.ParseException ex) {
+            Logger.getLogger(Json.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return solicitantes;
     }
 
     public void guardar(ArrayList<Solicitante> pSolicitantes){
@@ -84,10 +92,14 @@ public class Json {
                     credito.put("avaluo", creditoT.getAvaluo());
                     credito.put("montoBono", creditoT.getMontoBono());
                     credito.put("bono", creditoT.getBono());
+                    credito.put("TBP", creditoT.getTBP());
+                    credito.put("TED", creditoT.getTED());
+                    credito.put("ingresoFamiliar", creditoT.getIngresoFamiliar());
                 }
                 else if(pCredito.getTipo().equals("Fiduciario")) {
                     JSONArray listaFiadores = new JSONArray();
                     CreditoFiduciario creditoT = (CreditoFiduciario) realizar.buscarCredito(pSolicitante, pCredito.getNumeroSolicitud());
+
                     for(Fiador fiadorT:creditoT.fiadores) {
                         JSONObject fiador = new JSONObject();
                         fiador.put("nombre", fiadorT.getNombre());
@@ -112,7 +124,10 @@ public class Json {
             }
             solicitante.put("creditos", listaCreditos);
             
-            listaSolicitante.add(solicitante);
+            JSONObject Solicitante = new JSONObject();
+            Solicitante.put("solicitante",solicitante);
+            
+            listaSolicitante.add(Solicitante);
         }
         try(FileWriter file = new FileWriter("DATA\\"+"solicitantes.txt")){
             file.write(listaSolicitante.toJSONString());
@@ -122,27 +137,80 @@ public class Json {
         }
     }
 
-    private static void mostrarInfo(JSONObject jsonObject) {
-        JSONObject persona = (JSONObject) jsonObject.get("persona");
-        System.out.println("Persona dentro del JSON: ");
+    private static Solicitante cargarInfo(JSONObject jsonObject) throws java.text.ParseException {
+        JSONObject persona = (JSONObject) jsonObject.get("solicitante");
         
         String nombre = (String) persona.get("nombre");
-        System.out.println("Nombre: "+nombre);
-        
+        String sNombre = (String) persona.get("sNombre");
         String apellido = (String) persona.get("apellido");
-        System.out.println("Apellido: "+apellido);
-        
-        Long codigo = (Long) persona.get("codigo");
-        System.out.println("Codigo: "+codigo);
-        
-        Double estatura = (Double) persona.get("estatura");
-        System.out.println("Estatura: "+estatura);
-        
-        JSONArray telefonosList = (JSONArray) persona.get("telefonos");
-        for (Object tel: telefonosList){
-            JSONObject t = (JSONObject) tel;
-            System.out.println("Telefono: "+t.get("telefono"));
+        String sApellido = (String) persona.get("sApellido");
+        int cedula = Integer.valueOf(String.valueOf(persona.get("cedula")));
+        int telefono = Integer.valueOf(String.valueOf(persona.get("telefono")));
+        String correo = (String) persona.get("correo");
+        double salarioBruto = Double.valueOf(String.valueOf(persona.get("salarioBruto")));
+        double salarioLiquido = Double.valueOf(String.valueOf(persona.get("salarioLiquido")));
+
+        JSONObject direccion = (JSONObject) persona.get("direccion");
+        String provincia = (String) direccion.get("provincia");
+        String canton = (String) direccion.get("canton");
+        String distrito = (String) direccion.get("distrito");
+        String sennas = (String) direccion.get("sennas");
+
+        Solicitante pSolicitante = new Solicitante(nombre, sNombre, apellido, sApellido, cedula, telefono, correo, salarioBruto, salarioLiquido, provincia, canton, distrito, sennas);
+
+        JSONArray listaCreditos = (JSONArray) persona.get("creditos");
+        for (Object cre: listaCreditos){
+            JSONObject credito = (JSONObject) cre;
+            
+            String tipo = (String) credito.get("tipo");                                
+            double monto = Double.valueOf(String.valueOf(credito.get("monto")));
+            String moneda = (String) credito.get("moneda");
+            String fechaSolicitud = (String) credito.get("fechaSolicitud");
+            String numeroSolicitud = (String) credito.get("numeroSolicitud");                 
+            int plazo = Integer.valueOf(String.valueOf(credito.get("plazo")));
+            if(tipo.equals("Hipotecario de terreno")) {
+                double avaluo = Double.valueOf(String.valueOf(credito.get("avaluo")));
+                AdquisicionTerreno pCredito = new AdquisicionTerreno(tipo, monto, plazo, moneda, avaluo, numeroSolicitud, fechaSolicitud);
+                pSolicitante.setCredito(pCredito);
+            }
+            if(tipo.equals("Hipotecario de vivienda")) {
+                double avaluo = Double.valueOf(String.valueOf(credito.get("avaluo")));
+                double montoBono = Double.valueOf(String.valueOf(credito.get("montoBono")));
+                boolean bono = Boolean.valueOf(String.valueOf(credito.get("'bono")));
+                double TBP = Double.valueOf(String.valueOf(credito.get("TBP")));
+                double TED = Double.valueOf(String.valueOf(credito.get("TED")));
+                double ingresoFamiliar = Double.valueOf(String.valueOf(credito.get("ingresoFamiliar")));
+                ConstruccionVivienda pCredito = new ConstruccionVivienda(tipo, monto, plazo, moneda, TBP, TED, bono, ingresoFamiliar, numeroSolicitud, fechaSolicitud, montoBono);
+                pSolicitante.setCredito(pCredito);
+            }
+            if(tipo.equals("Fiduciario")) {
+                JSONArray listaFiadores = (JSONArray) credito.get("fiadores");
+                CreditoFiduciario pCredito = new CreditoFiduciario(tipo, monto, plazo, moneda, numeroSolicitud, fechaSolicitud);
+                for(Object fia: listaFiadores) {
+                    JSONObject fiador = (JSONObject ) fia;
+                    String nombreF = (String) fiador.get("nombre");
+                    int cedulaF = Integer.valueOf(String.valueOf(fiador.get("cedula")));
+                    double salarioBrutoF = Double.valueOf(String.valueOf(fiador.get("salarioBruto")));
+                    double salarioLiquidoF = Double.valueOf(String.valueOf(fiador.get("salarioLiquido")));
+                    Fiador pFiador = new Fiador(nombreF, cedulaF, salarioBrutoF, salarioLiquidoF);
+                    pCredito.setFiador(pFiador);
+                }
+                pSolicitante.setCredito(pCredito);
+            }
+            if(tipo.equals("Prendiario")) {
+                CreditoPrendiario pCredito = new CreditoPrendiario(tipo, monto, plazo, moneda, numeroSolicitud, fechaSolicitud);
+                JSONObject prenda = (JSONObject) credito.get("prenda");
+                String descripccionP = (String) prenda.get("descripccion");
+                double montoP = Double.valueOf(String.valueOf(prenda.get("monto")));
+                pCredito.setEstado(pCredito.setPrenda(descripccionP, montoP));
+                pSolicitante.setCredito(pCredito);
+            }
+            if(tipo.equals("Personal")) {
+                CreditoPersonal pCredito = new CreditoPersonal(tipo, monto, plazo, moneda, numeroSolicitud, fechaSolicitud);
+                pCredito.setEstado(pCredito.verificarSolicitante(pSolicitante.getSalarioLiquido()));
+                pSolicitante.setCredito(pCredito);
+            }
         }
-        
+        return pSolicitante;
     }
 }

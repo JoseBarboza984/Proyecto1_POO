@@ -69,7 +69,7 @@ public abstract class Credito {
         cantSolicitudes++;
         numeroSolicitud = pNumeroSolicitud;
         gastosFormalizacion = 0.03;
-        DateFormat formato = new SimpleDateFormat("d-MMM-yyyy, HH:mm:ss aaa");
+        DateFormat formato = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy");
         fechaSolicitud = formato.parse(pFechaSolicitud);
     }
     

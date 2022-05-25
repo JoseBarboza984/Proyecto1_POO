@@ -4,6 +4,7 @@
  */
 package logicadenegocios;
 
+import java.text.ParseException;
 import util.FormatoDecimal;
 
 /**
@@ -13,7 +14,6 @@ import util.FormatoDecimal;
  */
 public class CreditoPersonal extends Credito{
     
-    /**
     /**
      * Metodo constructor del credito personal
      * 
@@ -31,6 +31,22 @@ public class CreditoPersonal extends Credito{
             super.tasaInteres = 0.16;
     }
     
+    /**
+     * Metodo constructor del credito personal
+     * 
+     * @param pTipo         Tipo de credito
+     * @param pMonto      Monto inicial solicitado en el credito
+     * @param pPlazo        Cantidad de años plazo del credito
+     * @param pMoneda    Tipo de moneda en la que se pide el credito
+     */
+    public CreditoPersonal(String pTipo, double pMonto, int pPlazo, String pMoneda, String pNumeroSolicitud, String pFechaSolicitud) throws ParseException {
+        super(pTipo, pMonto, pPlazo, pMoneda, pNumeroSolicitud, pFechaSolicitud);
+        super.gastosFormalizacion = pMonto * 0.03;
+        if("Colones".equals(pMoneda))
+            super.tasaInteres = 0.18;
+        else if("Dolares".equals(pMoneda))
+            super.tasaInteres = 0.16;
+    }
     
     /**
      * Metodo para verificar un solicitante 

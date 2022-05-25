@@ -9,6 +9,7 @@ import excepciones.SolicitanteDoesNotExistException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import util.*;
 import logicadenegocios.*;
 
@@ -115,20 +116,19 @@ public class VistaPDF extends javax.swing.JFrame {
         try {
             Solicitante solicitante = realizar.buscarSolicitante(Integer.valueOf(Cedula.getText()));
             Credito cre = realizar.buscarCredito(solicitante, NumeroSolicitud.getText());
-            Object[][] matriz = cre.calcularTablaAmortizacion(cre.getMonto(), cre.getPlazo(), cre.getTasaInteres());
-            realizar.guardarPDF(matriz, solicitante, cre.toString(), correo);
+            if(cre == null)
+                JOptionPane.showMessageDialog(rootPane, "No existe un credito ingresado con ese identificador");
+            else {
+                Object[][] matriz = cre.calcularTablaAmortizacion(cre.getMonto(), cre.getPlazo(), cre.getTasaInteres());
+                realizar.guardarPDF(matriz, solicitante, cre.toString(), correo);
+            } 
         } catch (SolicitanteDoesNotExistException | IOException | DocumentException ex) {
-            Logger.getLogger(VistaPDF.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "No existe un usuario ingresado con la cedula ingresada");
         }
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
-        // TODO add your handling code here:
-        
-        //Menu newframe = new Menu();
-        
-        //newframe.setVisible(true);
-        
+
         this.dispose();
     }//GEN-LAST:event_RegresarActionPerformed
 

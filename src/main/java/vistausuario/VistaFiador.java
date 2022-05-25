@@ -197,12 +197,14 @@ public class VistaFiador extends javax.swing.JFrame {
             salarioBruto = Double.valueOf(SalarioBruto.getText());
             salarioLiquido = Double.valueOf(SalarioLiquido.getText());
             if(!"".equals(Nombre2.getText()) || !"".equals(Cedula2.getText()) || !"".equals(SalarioBruto2.getText()) || !"".equals(SalarioLiquido2.getText())) {
-                JOptionPane.showMessageDialog(this, "Favor ingresar al menos a un fiador");
+                
                 nombre2 = Nombre2.getText();
                 cedula2 = Integer.valueOf(Cedula2.getText());
                 salarioBruto2 = Double.valueOf(SalarioBruto2.getText());
                 salarioLiquido2 = Double.valueOf(SalarioLiquido2.getText()); 
                 cantidad = 2;
+            } else {
+                JOptionPane.showMessageDialog(this, "Favor ingresar al menos a un fiador");
             }
             Fiador fiador;
             int cantFiadores = cantidad;

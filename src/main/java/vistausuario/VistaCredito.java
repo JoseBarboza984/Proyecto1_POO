@@ -238,7 +238,7 @@ public class VistaCredito extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonColonesActionPerformed
 
     private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
-
+        
         this.dispose();
     }//GEN-LAST:event_RegresarActionPerformed
 
@@ -296,7 +296,7 @@ public class VistaCredito extends javax.swing.JFrame {
                     VistaBono newframe = new VistaBono();
         
                     newframe.setVisible(true);
-                    this.dispose();
+
                 }
                 else if (TipoCredito.getSelectedItem().equals("Fiduciario")) {      ///
                     tipo = "Fiduciario";
@@ -304,7 +304,7 @@ public class VistaCredito extends javax.swing.JFrame {
                     VistaFiador newframe = new VistaFiador();
         
                     newframe.setVisible(true);
-                    this.dispose();
+
                 }
                 else if (TipoCredito.getSelectedItem().equals("Personal")) {
                     tipo = "Personal";
@@ -327,10 +327,10 @@ public class VistaCredito extends javax.swing.JFrame {
                     VistaPrenda newframe = new VistaPrenda();
         
                     newframe.setVisible(true);
-                    this.dispose();
+                    this.setVisible(true);
                 }
             } catch (SolicitanteDoesNotExistException ex) {
-                System.err.println(ex.getMessage());
+                JOptionPane.showMessageDialog(rootPane, "No existe un usuario ingresado con la cedula ingresada");
             }
         }
     

@@ -27,8 +27,9 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         solicitantes = new ArrayList<>();
-        Solicitante solicitanteBase = new Solicitante("Jose", "Daniel", "Barboza", "Campos", 702870837, 87175835, "jd.2001.bc@gmail.com",  300000.0, 950000.0, "Limon", "Poccoci", "Guapiles", "Centro");
-        solicitantes.add(solicitanteBase);
+        solicitantes = Json.leer();
+        //Solicitante solicitanteBase = new Solicitante("Jose", "Daniel", "Barboza", "Campos", 702870837, 87175835, "jd.2001.bc@gmail.com",  300000.0, 950000.0, "Limon", "Poccoci", "Guapiles", "Centro");
+        //solicitantes.add(solicitanteBase);
         initComponents();
         cerrar();
         this.setLocationRelativeTo(null);
@@ -301,7 +302,6 @@ public class Menu extends javax.swing.JFrame {
         
         newframe.setVisible(true);
         
-        this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -310,15 +310,13 @@ public class Menu extends javax.swing.JFrame {
         VistaPDF newframe = new VistaPDF();
         
         newframe.setVisible(true);
-        
-        this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void CedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CedulaKeyTyped
         // Metodo para que solo acepte numeros
         char validar=evt.getKeyChar();
         
-        if(Character.isLetter(validar)){
+        if(Character.isLetter(validar) || (validar != '.' || Cedula.getText().contains("."))){
             getToolkit().beep();
             evt.consume();
             
@@ -384,16 +382,20 @@ public class Menu extends javax.swing.JFrame {
             String canton = Canton.getText();
             String distrito = Distrito.getText();
             String sennas = Direccion.getText();
-            try{
-                Solicitante solicitante = new Solicitante(nombre, Snombre, apellido, Sapellido, cedula, telefono, correo, salarioBruto, salarioLiquido, provincia, canton, distrito, sennas);
-                funciones fun = new funciones();
-                fun.registrarSolicitante(solicitante);
-                Json almacenar = new Json();
-                almacenar.guardar(solicitantes);
-                JOptionPane.showMessageDialog(this, "Se registro el solicitante con exito");
-                this.dispose();
-            } catch(SolicitanteAlreadyExistException e) {
-                System.err.println(e.getMessage());
+            Solicitante solicitante = new Solicitante(nombre, Snombre, apellido, Sapellido, cedula, telefono, correo, salarioBruto, salarioLiquido, provincia, canton, distrito, sennas);
+            funciones fun = new funciones();
+            
+            try {
+                Solicitante prueba = fun.buscarSolicitante(cedula);
+                if(prueba != null)
+                    JOptionPane.showMessageDialog(rootPane, "Ya existe un usuario ingresado con la misma cedula");
+                else {
+                    fun.registrarSolicitante(solicitante);
+                    Json almacenar = new Json();
+                    almacenar.guardar(solicitantes);
+                    JOptionPane.showMessageDialog(this, "Se registro el solicitante con exito");
+                }
+            } catch (SolicitanteDoesNotExistException ex) {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -409,7 +411,7 @@ public class Menu extends javax.swing.JFrame {
     private void TelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelefonoKeyTyped
         char validar=evt.getKeyChar();
         
-        if(Character.isLetter(validar)){
+        if(Character.isLetter(validar) || (validar != '.' || Telefono.getText().contains("."))){
             getToolkit().beep();
             evt.consume();
             
@@ -437,24 +439,9 @@ public class Menu extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-
-       
-        
- 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() 
-        {
-            public void run() 
-            {
-                new Menu().setVisible(true);
-            }
-     
-        });
+        java.awt.EventQueue.invokeLater(() -> {
+            new Menu().setVisible(true);
+       });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

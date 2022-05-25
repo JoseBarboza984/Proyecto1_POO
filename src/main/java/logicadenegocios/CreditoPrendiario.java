@@ -4,6 +4,7 @@
  */
 package logicadenegocios;
 
+import java.text.ParseException;
 import util.FormatoDecimal;
 
 
@@ -25,6 +26,28 @@ public class CreditoPrendiario extends Credito {
      */
     public CreditoPrendiario(String pTipo, double pMonto, int pPlazo, String pMoneda) {
         super(pTipo, pMonto, pPlazo, pMoneda);
+        super.gastosFormalizacion = pMonto * 0.03;
+       
+        if("Colones".equals(pMoneda)) {
+            super.tasaInteres = 0.15;
+            super.honorariosLegales = calcularHonorariosColones(pMonto);
+        }
+        else if("Dolares".equals(pMoneda)){
+            super.tasaInteres = 0.13;
+            super.honorariosLegales = calcularHonorariosDolares(pMonto);
+        }
+    }
+    
+    /**
+     * Metodo constructor del credito prendario
+     * 
+     * @param pTipo         Tipo de credito
+     * @param pMonto      Monto inicial solicitado en el credito
+     * @param pPlazo        Cantidad de años plazo del credito
+     * @param pMoneda    Tipo de moneda en la que se pide el credito
+     */
+    public CreditoPrendiario(String pTipo, double pMonto, int pPlazo, String pMoneda, String pNumeroSolicitud, String pFechaSolicitud) throws ParseException {
+        super(pTipo, pMonto, pPlazo, pMoneda, pNumeroSolicitud, pFechaSolicitud);
         super.gastosFormalizacion = pMonto * 0.03;
        
         if("Colones".equals(pMoneda)) {

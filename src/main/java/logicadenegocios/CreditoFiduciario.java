@@ -5,6 +5,7 @@
 package logicadenegocios;
 
 import java.lang.Math;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import util.FormatoDecimal;
@@ -27,6 +28,28 @@ public class CreditoFiduciario extends Credito {
      */
     public CreditoFiduciario(String pTipo, double pMonto, int pPlazo, String pMoneda) {
         super(pTipo, pMonto, pPlazo, pMoneda);
+        super.gastosFormalizacion = pMonto * 0.03;
+        double tasa = 0;
+        if(pMoneda.equals("Colones"))
+            tasa = 0.13;
+        else if(pMoneda.equals("Dolares"))
+            tasa = 0.11;
+        super.tasaInteres = tasa;
+        fiadores = new ArrayList<>();
+        
+        super.cuota = (pMonto * tasa)/1- (double) Math.pow((1.0+tasa), -pPlazo);
+    }
+    
+    /**
+     * Metodo constructor del credito fiduciario
+     * 
+     * @param pTipo         Tipo de credito
+     * @param pMonto      Monto inicial solicitado en el credito
+     * @param pPlazo        Cantidad de años plazo del credito
+     * @param pMoneda    Tipo de moneda en la que se pide el credito
+     */
+    public CreditoFiduciario(String pTipo, double pMonto, int pPlazo, String pMoneda, String pNumeroSolicitud, String pFechaSolicitud) throws ParseException {
+        super(pTipo, pMonto, pPlazo, pMoneda, pNumeroSolicitud, pFechaSolicitud);
         super.gastosFormalizacion = pMonto * 0.03;
         double tasa = 0;
         if(pMoneda.equals("Colones"))
@@ -86,6 +109,10 @@ public class CreditoFiduciario extends Credito {
             return false;
         fiadores.addAll(Arrays.asList(pFiador));
         return true;
+    }
+    
+    public void setFiador(Fiador pFiador) {
+        fiadores.add(pFiador);
     }
     
     /**

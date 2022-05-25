@@ -4,6 +4,7 @@
  */
 package logicadenegocios;
 
+import java.text.ParseException;
 import util.FormatoDecimal;
 
 
@@ -16,6 +17,9 @@ public class ConstruccionVivienda extends Credito{
     private double avaluo;
     private double montoBono = 0;
     private boolean bono = false;
+    private double TBP;
+    private double TED;
+    private double ingresoFamiliar;
     
     /**
      * Metodo constructor del credito hipotecario de construcción de vivienda
@@ -32,6 +36,9 @@ public class ConstruccionVivienda extends Credito{
     public ConstruccionVivienda (String pTipo, double pMonto, int pPlazo, String pMoneda, double pTBP, double pTED, boolean pBono, double pIngresoFamiliar) {
         super(pTipo, pMonto, pPlazo, pMoneda);
         bono = pBono;
+        TED = pTED;
+        TBP = pTBP;
+        ingresoFamiliar = pIngresoFamiliar;
         if("Colones".equals(pMoneda)) {
             super.tasaInteres = pTBP+0.025;
             if(bono = true) {
@@ -59,6 +66,48 @@ public class ConstruccionVivienda extends Credito{
                 avaluo = pMonto * 0.0065;
             }
         }
+        this.setEstado(true);
+    }
+    
+        /**
+     * Metodo constructor del credito hipotecario de construcción de vivienda
+     * 
+     * @param pTipo                       Tipo de credito
+     * @param pMonto                   Monto inicial solicitado en el credito
+     * @param pPlazo                     Cantidad de años plazo del credito
+     * @param pMoneda                 Tipo de moneda en la que se pide el credito
+     * @param pTBP                       Tasa basica pasiva
+     * @param pTED                       Tasa efectiva en dolares
+     * @param pBono                     Boolean que indica si quiere aplicar al bono
+     * @param pIngresoFamiliar     Monto del ingreso familiar
+     */
+    public ConstruccionVivienda (String pTipo, double pMonto, int pPlazo, String pMoneda, double pTBP, double pTED, boolean pBono, double pIngresoFamiliar, String pNumeroSolicitud, String pFechaSolicitud, double pMontoBono) throws ParseException {
+        super(pTipo, pMonto, pPlazo, pMoneda, pNumeroSolicitud, pFechaSolicitud);
+        bono = pBono;
+        montoBono = pMontoBono;
+        avaluo = avaluo;
+        if("Colones".equals(pMoneda)) {
+            super.tasaInteres = pTBP+0.025;
+            if(bono = true) {
+                super.honorariosLegales = calcularHonorariosColones(pMonto-montoBono);
+                super.gastosFormalizacion = (pMonto-montoBono)*0.0075;
+            } else {
+                super.honorariosLegales = calcularHonorariosColones(pMonto);
+                super.gastosFormalizacion = pMonto*0.0075;
+            }
+        }
+        
+        else if("Dolares".equals(pMoneda)){
+            super.tasaInteres = pTED+0.015;
+            if(bono = true) {
+                super.honorariosLegales = calcularHonorariosDolares(pMonto-montoBono);
+                super.gastosFormalizacion = (pMonto-montoBono)*0.0075;
+            } else {
+                super.honorariosLegales = calcularHonorariosDolares(pMonto);
+                super.gastosFormalizacion = pMonto*0.0075;
+            }
+        }
+        this.setEstado(true);
     }
          
     /**
@@ -82,6 +131,15 @@ public class ConstruccionVivienda extends Credito{
     }
     public boolean getBono() {
         return bono;
+    }
+    public double getTBP() {
+        return TBP;
+    }
+    public double getTED() {
+        return TED;
+    }
+    public double getIngresoFamiliar() {
+        return ingresoFamiliar;
     }
     
     /**

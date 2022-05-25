@@ -9,13 +9,23 @@ Without this configuration present, some functionality in the IDE may be limited
     <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
         <word>aceptar</word>
         <word>adquisición</word>
+        <word>aleman</word>
+        <word>americano</word>
         <word>amortizacion</word>
         <word>amortización</word>
+        <word>apellido</word>
         <word>aplica</word>
+        <word>aplicar</word>
+        <word>appellido</word>
+        <word>asignado</word>
         <word>atributo</word>
+        <word>avaluo</word>
         <word>año</word>
         <word>años</word>
         <word>basica</word>
+        <word>bono</word>
+        <word>bruto</word>
+        <word>brutos</word>
         <word>Cadena</word>
         <word>Calcula</word>
         <word>calculado</word>
@@ -24,58 +34,103 @@ Without this configuration present, some functionality in the IDE may be limited
         <word>calculos</word>
         <word>Cantidad</word>
         <word>caracteres</word>
+        <word>caso</word>
+        <word>Cedula</word>
         <word>Clase</word>
+        <word>codigo</word>
+        <word>condiciones</word>
+        <word>construcción</word>
         <word>contiene</word>
+        <word>Correo</word>
+        <word>costo</word>
         <word>Crea</word>
         <word>credito</word>
+        <word>creditos</word>
+        <word>cumplan</word>
         <word>cumple</word>
+        <word>cumplen</word>
         <word>cuota</word>
+        <word>cédula</word>
         <word>datos</word>
+        <word>Descripcción</word>
         <word>determinar</word>
         <word>Deuda</word>
         <word>dia</word>
+        <word>dirección</word>
+        <word>Distrito</word>
         <word>dolares</word>
         <word>efectiva</word>
+        <word>electronico</word>
+        <word>estabecer</word>
         <word>establece</word>
+        <word>establecer</word>
         <word>estado</word>
+        <word>familiares</word>
         <word>fecha</word>
+        <word>fiador</word>
+        <word>fiadores</word>
+        <word>fiduciario</word>
         <word>formato</word>
         <word>frances</word>
         <word>gastos</word>
         <word>hija</word>
         <word>hipotecario</word>
         <word>honorarios</word>
+        <word>Identificador</word>
+        <word>indica</word>
+        <word>ingreso</word>
+        <word>ingresos</word>
         <word>inicial</word>
         <word>interes</word>
+        <word>liquido</word>
         <word>los</word>
+        <word>lugar</word>
         <word>matriz</word>
         <word>Metodo</word>
         <word>minimo</word>
         <word>moneda</word>
         <word>monto</word>
+        <word>Nombre</word>
         <word>Numero</word>
+        <word>número</word>
         <word>objetos</word>
         <word>obtenida</word>
         <word>obtiene</word>
         <word>pagar</word>
         <word>pasiva</word>
+        <word>pdf</word>
         <word>pide</word>
         <word>plazo</word>
+        <word>prenda</word>
+        <word>prendario</word>
         <word>prestamo</word>
+        <word>proveniencia</word>
+        <word>Provincia</word>
         <word>que</word>
+        <word>quiere</word>
         <word>Realiza</word>
         <word>representa</word>
+        <word>requisitos</word>
+        <word>salario</word>
+        <word>salarios</word>
         <word>se</word>
+        <word>Señas</word>
         <word>sistema</word>
         <word>solicitado</word>
         <word>solicitante</word>
+        <word>solicitud</word>
         <word>Suma</word>
+        <word>sus</word>
         <word>Tasa</word>
+        <word>telefono</word>
         <word>terreno</word>
         <word>Tipo</word>
         <word>Totales</word>
         <word>un</word>
         <word>una</word>
         <word>va</word>
+        <word>verifica</word>
+        <word>verificar</word>
+        <word>vivienda</word>
     </spellchecker-wordlist>
 </project-shared-configuration>

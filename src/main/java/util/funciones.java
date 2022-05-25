@@ -41,41 +41,24 @@ import javax.swing.JOptionPane;
 import logicadenegocios.*;
 import excepciones.*;
 import vistausuario.*;
+import static vistausuario.Menu.solicitantes;
 
 /**
  *
  * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class funciones {
-    Menu menu;
 
-    public funciones() {
-        this.menu = new Menu();
-    }
     
-    public void registrarSolicitante(Solicitante pSolicitante) throws SolicitanteAlreadyExistException {
-        if(buscarSolicitanteSinExcepcion(pSolicitante.getCedula()) != null){
-            menu.dispose();
-            throw new SolicitanteAlreadyExistException(String.valueOf(pSolicitante.getCedula()));
-        }
-        menu.solicitantes.add(pSolicitante);
-        menu.dispose();
-        return;
-    }
-    
-    public Solicitante buscarSolicitanteSinExcepcion(int pCedula) {
-        for(Solicitante solicitante:menu.solicitantes) {
-            if(solicitante.getCedula() == pCedula){
-                return solicitante;
-            }
-        }
-        return null;
+    public void registrarSolicitante(Solicitante pSolicitante) {
+        Menu.solicitantes.add(pSolicitante);
     }
     
     public Solicitante buscarSolicitante(int pCedula) throws SolicitanteDoesNotExistException{
-        for(Solicitante solicitante:menu.solicitantes) {
+        if(solicitantes.size() == 0)
+            return null;
+        for(Solicitante solicitante:Menu.solicitantes) {
             if(solicitante.getCedula() == pCedula){
-                menu.dispose();
                 return solicitante;
             }
         }
@@ -84,17 +67,14 @@ public class funciones {
     
     public void registrarCreditoTerreno(Solicitante pSolicitante, AdquisicionTerreno pCredito) {
         pSolicitante.setCredito(pCredito);
-        menu.dispose();
     }
     
     public void registrarCreditoVivienda(Solicitante pSolicitante, ConstruccionVivienda pCredito) {
         pSolicitante.setCredito(pCredito);
-        menu.dispose();
     }
     
     public void registrarCreditoFiduciario(Solicitante pSolicitante, CreditoFiduciario pCredito) {
         pSolicitante.setCredito(pCredito);
-        menu.dispose();
     }
     
     public void registrarFiadores(CreditoFiduciario pCredito, Fiador[] pFiador, double pMonto, double pCuota) throws FiadorDoesNotApplyException{
@@ -103,31 +83,25 @@ public class funciones {
             String info = "";
             for(Fiador fiador:pFiador) 
                 info += String.valueOf(fiador.getCedula());
-            menu.dispose();
             throw new FiadorDoesNotApplyException(info);
         }
-        menu.dispose();
     }
     
     public void registrarCreditoPersonal(Solicitante pSolicitante, CreditoPersonal pCredito) {
         pSolicitante.setCredito(pCredito);
-        menu.dispose();
     }
     
     public void registrarCreditoPrendiario(Solicitante pSolicitante, CreditoPrendiario pCredito) {
         pSolicitante.setCredito(pCredito);
-        menu.dispose();
     }
     
     public void registrarPrenda(CreditoPrendiario pCredito, String Descripccion, double Monto) throws PrendaDoesNotApplyException {
         boolean validacion = pCredito.setPrenda(Descripccion, Monto);
-        menu.dispose();
         if(validacion = false)
             throw new PrendaDoesNotApplyException(Descripccion);
     }
     
     public Credito buscarCredito(Solicitante pSolicitante, String pNumSolicitud) {
-        menu.dispose();
         for(Credito credito:pSolicitante.creditos) {
             if(credito.getNumeroSolicitud().equals(pNumSolicitud)) 
                 return credito;
@@ -183,12 +157,10 @@ public class funciones {
             documento.add(Chunk.NEWLINE); 
             documento.close(); 
             JOptionPane.showMessageDialog(null,"PDF Generado"); 
-            menu.dispose();
             if(pCorreo)
                 enviarCorreo(nombrePDF, pSolicitante.getCorreo());
           } 
           catch (FileNotFoundException | DocumentException e) {
-              menu.dispose();
               System.err.println(e.getMessage());
           }
     }
@@ -226,14 +198,12 @@ public class funciones {
           message.addRecipient(Message.RecipientType.TO, new InternetAddress(destino));
           message.setSubject(asunto);
           message.setContent(partes);
-          menu.dispose();
              try (Transport transportar = sesion.getTransport("smtp")) {
                  transportar.connect(correoEmisor, contra);
                  transportar.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
              }
           JOptionPane.showMessageDialog(null, "Correo Enviado");
         }catch(HeadlessException | MessagingException e){
-            menu.dispose();
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
     }
