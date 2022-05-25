@@ -22,15 +22,12 @@ import excepciones.*;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import java.util.ArrayList;
-
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
+
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
@@ -48,28 +45,12 @@ import vistausuario.*;
  * @author Jose
  */
 public class funciones {
-    Menu menu = new Menu();
-    /*
-    public static void main(String[] args) throws SolicitanteAlreadyExistException  {//throws IOException, DocumentException
-        solicitantes = new ArrayList<>(); //String pTipo, double pMonto, int pPlazo, String pMoneda, Date pFechaSolicitud
-        Solicitante solicitante = new Solicitante("Jose", "Daniel", "Barboza", "Campos", 702870837, 87175835, "jd.2001.bc@gmail.com",  300000.0, 950000.0, "Limon", "Poccoci", "Guapiles", "Centro");
-        registrarSolicitante(solicitante);
-        solicitante = buscarSolicitante(702870837);
-        if(solicitante != null) {
-            CreditoPersonal credito = new CreditoPersonal("Personal", 1000000, 5, "Colones");
-            credito.setEstado(credito.verificarSolicitante(solicitante.getSalarioLiquido()));
-            solicitante.setCredito(credito);
-            System.out.println("Se regsitro el credito");
-            Json x = new Json();
-            x.guardar(solicitante);
-            return;
-         }
-        System.out.println("No se regsitro el credito");
-        Credito cre = buscarCredito(buscarSolicitante(702870837), "CRE0001");
-        System.out.println(cre.toString());
-        Object[][] matriz = cre.calcularTablaAmortizacion(1000000, 5, cre.getTasaInteres());
-        //guardarPDF(matriz, buscarSolicitante(702870837), cre.toString());
-    }*/
+    Menu menu;
+
+    public funciones() {
+        this.menu = new Menu();
+    }
+
     /**
     public static void actionRegistrarSolicitante() {
         String nombre;
@@ -98,8 +79,10 @@ public class funciones {
     }*/
     
     public void registrarSolicitante(Solicitante pSolicitante) throws SolicitanteAlreadyExistException {
-        if(buscarSolicitanteSinExcepcion(pSolicitante.getCedula()) != null)
+        if(buscarSolicitanteSinExcepcion(pSolicitante.getCedula()) != null){
+            menu.dispose();
             throw new SolicitanteAlreadyExistException(String.valueOf(pSolicitante.getCedula()));
+        }
         menu.solicitantes.add(pSolicitante);
         menu.dispose();
         return;
@@ -107,8 +90,9 @@ public class funciones {
     
     public Solicitante buscarSolicitanteSinExcepcion(int pCedula) {
         for(Solicitante solicitante:menu.solicitantes) {
-            if(solicitante.getCedula() == pCedula)
+            if(solicitante.getCedula() == pCedula){
                 return solicitante;
+            }
         }
         return null;
     }
@@ -116,48 +100,59 @@ public class funciones {
     public Solicitante buscarSolicitante(int pCedula) throws SolicitanteDoesNotExistException{
         for(Solicitante solicitante:menu.solicitantes) {
             if(solicitante.getCedula() == pCedula){
-                return solicitante;}
+                menu.dispose();
+                return solicitante;
+            }
         }
         throw new SolicitanteDoesNotExistException(String.valueOf(pCedula));
     }
     
     public void registrarCreditoTerreno(Solicitante pSolicitante, AdquisicionTerreno pCredito) {
         pSolicitante.setCredito(pCredito);
+        menu.dispose();
     }
     
     public void registrarCreditoVivienda(Solicitante pSolicitante, ConstruccionVivienda pCredito) {
         pSolicitante.setCredito(pCredito);
+        menu.dispose();
     }
     
     public void registrarCreditoFiduciario(Solicitante pSolicitante, CreditoFiduciario pCredito) {
         pSolicitante.setCredito(pCredito);
+        menu.dispose();
     }
     
-    public static void registrarFiadores(CreditoFiduciario pCredito, Fiador[] pFiador, double pMonto, double pCuota) throws FiadorDoesNotApplyException{
+    public void registrarFiadores(CreditoFiduciario pCredito, Fiador[] pFiador, double pMonto, double pCuota) throws FiadorDoesNotApplyException{
         boolean validacion = pCredito.setFiadores(pFiador, pMonto, pCuota);
         if(validacion = false){
             String info = "";
             for(Fiador fiador:pFiador) 
                 info += String.valueOf(fiador.getCedula());
+            menu.dispose();
             throw new FiadorDoesNotApplyException(info);
         }
+        menu.dispose();
     }
     
     public void registrarCreditoPersonal(Solicitante pSolicitante, CreditoPersonal pCredito) {
         pSolicitante.setCredito(pCredito);
+        menu.dispose();
     }
     
     public void registrarCreditoPrendiario(Solicitante pSolicitante, CreditoPrendiario pCredito) {
         pSolicitante.setCredito(pCredito);
+        menu.dispose();
     }
     
     public void registrarPrenda(CreditoPrendiario pCredito, String Descripccion, double Monto) throws PrendaDoesNotApplyException {
         boolean validacion = pCredito.setPrenda(Descripccion, Monto);
+        menu.dispose();
         if(validacion = false)
             throw new PrendaDoesNotApplyException(Descripccion);
     }
     
     public Credito buscarCredito(Solicitante pSolicitante, String pNumSolicitud) {
+        menu.dispose();
         for(Credito credito:pSolicitante.creditos) {
             if(credito.getNumeroSolicitud().equals(pNumSolicitud)) 
                 return credito;
@@ -213,10 +208,12 @@ public class funciones {
             documento.add(Chunk.NEWLINE); 
             documento.close(); 
             JOptionPane.showMessageDialog(null,"PDF Generado"); 
+            menu.dispose();
             if(pCorreo)
                 enviarCorreo(nombrePDF, pSolicitante.getCorreo());
           } 
           catch (FileNotFoundException | DocumentException e) {
+              menu.dispose();
               System.err.println(e.getMessage());
           }
     }
@@ -254,12 +251,14 @@ public class funciones {
           message.addRecipient(Message.RecipientType.TO, new InternetAddress(destino));
           message.setSubject(asunto);
           message.setContent(partes);
+          menu.dispose();
              try (Transport transportar = sesion.getTransport("smtp")) {
                  transportar.connect(correoEmisor, contra);
                  transportar.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
              }
           JOptionPane.showMessageDialog(null, "Correo Enviado");
         }catch(HeadlessException | MessagingException e){
+            menu.dispose();
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
     }
