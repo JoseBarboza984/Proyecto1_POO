@@ -104,6 +104,7 @@ public class VistaPrenda extends javax.swing.JFrame {
         jPanel3.add(Valor, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, 200, 30));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Prenda");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 70, 20));
 
