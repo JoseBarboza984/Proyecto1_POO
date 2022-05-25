@@ -6,7 +6,7 @@ package excepciones;
 
 /**
  *
- * @author Jose
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class FiadorDoesNotApplyException extends Exception{
     public FiadorDoesNotApplyException(String errorMessage) {

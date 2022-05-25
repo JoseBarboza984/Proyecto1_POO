@@ -6,7 +6,7 @@ package excepciones;
 
 /**
  *
- * @author Jose
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class PrendaDoesNotApplyException extends Exception{
     public PrendaDoesNotApplyException(String errorMessage) {

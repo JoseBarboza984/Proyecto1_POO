@@ -6,7 +6,7 @@ package excepciones;
 
 /**
  *
- * @author Jose
+ * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
 public class SolicitanteAlreadyExistException extends Exception{
     public SolicitanteAlreadyExistException(String errorMessage) {
