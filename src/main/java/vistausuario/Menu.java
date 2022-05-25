@@ -21,14 +21,12 @@ import excepciones.*;
 public class Menu extends javax.swing.JFrame {
     public static ArrayList<Solicitante> solicitantes;
     //funciones realizar = new funciones();
-    Json almacenamiento;
 
     /**
      * Creates new form Proyecto1
      */
     public Menu() {
-        this.almacenamiento = new Json();
-        //solicitantes = new ArrayList<>();
+        solicitantes = new ArrayList<>();
         Solicitante solicitanteBase = new Solicitante("Jose", "Daniel", "Barboza", "Campos", 702870837, 87175835, "jd.2001.bc@gmail.com",  300000.0, 950000.0, "Limon", "Poccoci", "Guapiles", "Centro");
         solicitantes.add(solicitanteBase);
         initComponents();
@@ -390,8 +388,10 @@ public class Menu extends javax.swing.JFrame {
                 Solicitante solicitante = new Solicitante(nombre, Snombre, apellido, Sapellido, cedula, telefono, correo, salarioBruto, salarioLiquido, provincia, canton, distrito, sennas);
                 funciones fun = new funciones();
                 fun.registrarSolicitante(solicitante);
-                almacenamiento.guardar(solicitantes);
+                Json almacenar = new Json();
+                almacenar.guardar(solicitantes);
                 JOptionPane.showMessageDialog(this, "Se registro el solicitante con exito");
+                this.dispose();
             } catch(SolicitanteAlreadyExistException e) {
                 System.err.println(e.getMessage());
             }
