@@ -13,8 +13,6 @@ import util.*;
 import excepciones.*;
 
 
-
-
 /**
  * @author Jose Barboza, Joshua Ramírez, Diranan Calderón
  */
@@ -314,12 +312,12 @@ public class Menu extends javax.swing.JFrame {
 
     private void CedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CedulaKeyTyped
         // Metodo para que solo acepte numeros
-        char validar=evt.getKeyChar();
+        char caracter=evt.getKeyChar();
         
-        if(Character.isLetter(validar) || (validar != '.' || Cedula.getText().contains("."))){
-            getToolkit().beep();
-            evt.consume();
+        if (((caracter < '0' || caracter > '9'))
+                &&(caracter != KeyEvent.VK_BACK_SPACE)){
             
+            evt.consume();
             JOptionPane.showMessageDialog(rootPane, "Ingresar solamente números");
         }
     }//GEN-LAST:event_CedulaKeyTyped
@@ -384,18 +382,14 @@ public class Menu extends javax.swing.JFrame {
             String sennas = Direccion.getText();
             Solicitante solicitante = new Solicitante(nombre, Snombre, apellido, Sapellido, cedula, telefono, correo, salarioBruto, salarioLiquido, provincia, canton, distrito, sennas);
             funciones fun = new funciones();
-            
             try {
-                Solicitante prueba = fun.buscarSolicitante(cedula);
-                if(prueba != null)
-                    JOptionPane.showMessageDialog(rootPane, "Ya existe un usuario ingresado con la misma cedula");
-                else {
-                    fun.registrarSolicitante(solicitante);
-                    Json almacenar = new Json();
-                    almacenar.guardar(solicitantes);
-                    JOptionPane.showMessageDialog(this, "Se registro el solicitante con exito");
-                }
+                fun.buscarSolicitante(cedula);
+                JOptionPane.showMessageDialog(rootPane, "Ya existe un usuario ingresado con la misma cedula");
             } catch (SolicitanteDoesNotExistException ex) {
+                fun.registrarSolicitante(solicitante);
+                Json almacenar = new Json();
+                almacenar.guardar(solicitantes);
+                JOptionPane.showMessageDialog(this, "Se registro el solicitante con exito");
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -409,12 +403,12 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_TelefonoActionPerformed
 
     private void TelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelefonoKeyTyped
-        char validar=evt.getKeyChar();
+        char caracter=evt.getKeyChar();
         
-        if(Character.isLetter(validar) || (validar != '.' || Telefono.getText().contains("."))){
-            getToolkit().beep();
-            evt.consume();
+        if (((caracter < '0' || caracter > '9'))
+                &&(caracter != KeyEvent.VK_BACK_SPACE)){
             
+            evt.consume();
             JOptionPane.showMessageDialog(rootPane, "Ingresar solamente números");
         }
     }//GEN-LAST:event_TelefonoKeyTyped

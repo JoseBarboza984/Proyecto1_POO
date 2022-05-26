@@ -109,7 +109,7 @@ public class funciones {
         return null;
     }
     
-    public void guardarPDF(Object[][] pDatos, Solicitante pSolicitante, String infoCredito, boolean pCorreo) throws IOException, DocumentException {
+    public void guardarPDF(Object[][] pDatos, Solicitante pSolicitante, String infoCredito, boolean pCorreo) throws IOException, DocumentException, MessagingException {
         Document documento = new Document();
         Date fecha = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
@@ -165,7 +165,7 @@ public class funciones {
           }
     }
     
-    public void enviarCorreo(String nombrePDF, String correo){
+    public void enviarCorreo(String nombrePDF, String correo) throws MessagingException{
          try{
           Properties propiedad = new Properties();
           propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -203,7 +203,7 @@ public class funciones {
                  transportar.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
              }
           JOptionPane.showMessageDialog(null, "Correo Enviado");
-        }catch(HeadlessException | MessagingException e){
+        }catch(HeadlessException e){
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
     }

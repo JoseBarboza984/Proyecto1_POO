@@ -363,6 +363,7 @@ public class ConstruccionVivienda extends Credito{
      * @param pPlazoAnios    Cantidad de años en lo que se va a pagar el credito
      * @return      Array de objetos que contiene los datos {"Totales", , Suma de Interes, Suma de Amortización, 0}
      */
+    @Override
     public Object[] calcularTotales(Object[][] pMatriz, int pPlazoAnios) {
         Object[] array = new Object[5];
         array[0] = "Totales";
@@ -403,15 +404,15 @@ public class ConstruccionVivienda extends Credito{
         }
         resultados[largo] = calcularTotales(resultados, pPlazoAnios);
         resultados[largo] = calcularTotales(resultados, pPlazoAnios);
-        resultados[largo+2][0] = ""; 
-        resultados[largo+2][1] = "";
-        resultados[largo+2][2] = "";
-        resultados[largo+2][3] = "";
-        resultados[largo+2][4] = "";
+        resultados[largo+1][0] = " "; 
+        resultados[largo+1][1] = " ";
+        resultados[largo+1][2] = " ";
+        resultados[largo+1][3] = " ";
+        resultados[largo+1][4] = " ";
         
         resultados[largo+2][0] = "Codigo: "; 
         resultados[largo+2][1] = super.getNumeroSolicitud();
-        resultados[largo+2][2] = "";
+        resultados[largo+2][2] = " ";
         resultados[largo+2][3] = "Estado: ";
         resultados[largo+2][4] = super.estado;
         return resultados;

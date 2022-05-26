@@ -165,4 +165,5 @@ public abstract class Credito {
      */
     public abstract Object[][] calcularTablaAmortizacion(double pMonto, int pPlazoAnios, double pTasaInteres);
     
+    public abstract Object[] calcularTotales(Object[][] pMatriz, int pPlazoAnios);
 }

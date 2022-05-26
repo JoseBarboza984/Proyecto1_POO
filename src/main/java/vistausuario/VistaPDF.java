@@ -9,6 +9,7 @@ import excepciones.SolicitanteDoesNotExistException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 import util.*;
 import logicadenegocios.*;
@@ -124,6 +125,8 @@ public class VistaPDF extends javax.swing.JFrame {
             } 
         } catch (SolicitanteDoesNotExistException | IOException | DocumentException ex) {
             JOptionPane.showMessageDialog(rootPane, "No existe un usuario ingresado con la cedula ingresada");
+        } catch (MessagingException ex) {
+            JOptionPane.showMessageDialog(rootPane, "El correo electronico del solicitante es incorrecto");
         }
     }//GEN-LAST:event_GuardarActionPerformed
 

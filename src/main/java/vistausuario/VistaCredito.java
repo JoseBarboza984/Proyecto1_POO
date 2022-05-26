@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import util.*;
 import logicadenegocios.*;
 import static vistausuario.Menu.solicitantes;
+import util.obtenervalores;
 
 
 /**
@@ -276,8 +277,6 @@ public class VistaCredito extends javax.swing.JFrame {
                 solicitante = realizar.buscarSolicitante(cedula);
                 if(TipoCredito.getSelectedItem().equals("Hipotecario de terreno")) {
                     tipo = "Hipotecario de terreno";
-                    double TBP = obtenerTasa.getTBP();
-                    double TED = obtenerTasa.getTED();
                     AdquisicionTerreno credito = new AdquisicionTerreno(tipo, monto, plazo, moneda, TBP, TED);
                     realizar.registrarCreditoTerreno(solicitante, credito);
                     Credito credito2 = realizar.buscarCredito(solicitante, credito.getNumeroSolicitud());
@@ -296,7 +295,7 @@ public class VistaCredito extends javax.swing.JFrame {
                     VistaBono newframe = new VistaBono();
         
                     newframe.setVisible(true);
-
+                    this.dispose();
                 }
                 else if (TipoCredito.getSelectedItem().equals("Fiduciario")) {      ///
                     tipo = "Fiduciario";
@@ -304,7 +303,7 @@ public class VistaCredito extends javax.swing.JFrame {
                     VistaFiador newframe = new VistaFiador();
         
                     newframe.setVisible(true);
-
+                    this.dispose();
                 }
                 else if (TipoCredito.getSelectedItem().equals("Personal")) {
                     tipo = "Personal";
@@ -327,7 +326,7 @@ public class VistaCredito extends javax.swing.JFrame {
                     VistaPrenda newframe = new VistaPrenda();
         
                     newframe.setVisible(true);
-                    this.setVisible(true);
+                    this.dispose();
                 }
             } catch (SolicitanteDoesNotExistException ex) {
                 JOptionPane.showMessageDialog(rootPane, "No existe un usuario ingresado con la cedula ingresada");
